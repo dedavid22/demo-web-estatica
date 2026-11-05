@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fisioterapia Mareas — Las Palmas de Gran Canaria</title>
+<meta name="description" content="Fisioterapia, masaje deportivo y rehabilitación en Las Palmas de Gran Canaria. Cita por WhatsApp en el día.">
+<!-- Negocio ficticio: web de demostración del portafolio. No indexar. -->
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="Fisioterapia Mareas">
+<meta property="og:description" content="Fisioterapia, masaje deportivo y rehabilitación. Cita por WhatsApp.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='16' fill='%230f766e'/%3E%3Cpath d='M6 19c3-3 6-3 10 0s7 3 10 0' stroke='%23fff' stroke-width='2.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --bg:#fbfaf7; --surface:#ffffff; --sand:#f3ede3; --ink:#16302e; --muted:#4d625f;
+    --brand:#0f766e; --brand-dark:#0b5953; --accent:#e8a33d; --line:#e4ddd0;
+    --radius:14px; --shadow:0 6px 24px rgba(22,48,46,.08);
+    --max:1120px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  img,svg{display:block;max-width:100%}
+  a{color:var(--brand)}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+  .demo-bar{background:var(--ink);color:#e9f2f1;font-size:14px;text-align:center;padding:8px 16px}
+  .demo-bar a{color:#9fe3da}
+
+  header{position:sticky;top:0;z-index:10;background:rgba(251,250,247,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--ink);text-decoration:none}
+  .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+  .nav ul a{color:var(--ink);text-decoration:none;font-weight:500}
+  .nav ul a:hover{color:var(--brand)}
+  .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:10px;padding:8px 10px;cursor:pointer;color:var(--ink)}
+
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:13px 22px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer;transition:transform .15s,background .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn-primary{background:var(--brand);color:#fff}
+  .btn-primary:hover{background:var(--brand-dark)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+  .btn-wa{background:#1f9d55;color:#fff}
+
+  .hero{padding:72px 0 56px;background:linear-gradient(180deg,var(--sand),var(--bg))}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .eyebrow{display:inline-block;background:#d9efec;color:var(--brand-dark);font-weight:600;font-size:14px;padding:5px 12px;border-radius:999px}
+  h1{font-size:clamp(34px,5vw,54px);line-height:1.08;margin:16px 0 18px;letter-spacing:-.02em}
+  .lead{font-size:19px;color:var(--muted);max-width:34ch;margin:0 0 28px}
+  .cta{display:flex;flex-wrap:wrap;gap:12px}
+  .facts{display:flex;flex-wrap:wrap;gap:22px;margin-top:32px;color:var(--muted);font-size:15px}
+  .facts b{display:block;color:var(--ink);font-size:22px}
+  .hero-art{border-radius:24px;overflow:hidden;box-shadow:var(--shadow);background:#cfe9e5}
+
+  section{padding:72px 0}
+  h2{font-size:clamp(28px,3.5vw,38px);line-height:1.15;margin:0 0 12px;letter-spacing:-.01em}
+  .sub{color:var(--muted);margin:0 0 36px;max-width:60ch}
+
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .card .ico{width:44px;height:44px;border-radius:12px;background:#d9efec;display:grid;place-items:center;margin-bottom:14px}
+  .card h3{margin:0 0 6px;font-size:19px}
+  .card p{margin:0 0 16px;color:var(--muted);font-size:15.5px;flex:1}
+  .price{font-weight:700;color:var(--brand-dark)}
+  .price small{font-weight:500;color:var(--muted)}
+
+  .about{background:var(--sand)}
+  .about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:center}
+  .checks{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:12px}
+  .checks li{display:flex;gap:12px;align-items:flex-start}
+  .checks svg{flex:none;margin-top:3px}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;counter-reset:s}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+  .step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--ink);font-weight:700;margin-bottom:12px}
+  .step h3{margin:0 0 6px;font-size:18px}
+  .step p{margin:0;color:var(--muted);font-size:15.5px}
+
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  form{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);display:grid;gap:16px}
+  label{font-weight:600;font-size:15px;display:grid;gap:6px}
+  input,select,textarea{font:inherit;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:3px solid #9fe3da;border-color:var(--brand)}
+  textarea{min-height:110px;resize:vertical}
+  .form-ok{display:none;background:#d9efec;color:var(--brand-dark);border-radius:10px;padding:12px 14px;font-weight:600}
+  .info{display:grid;gap:18px;align-content:start}
+  .info-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .info-box h3{margin:0 0 8px;font-size:18px}
+  .hours{width:100%;border-collapse:collapse;font-size:15.5px}
+  .hours td{padding:6px 0;border-bottom:1px dashed var(--line)}
+  .hours td:last-child{text-align:right;font-weight:600}
+  .map{border:0;width:100%;height:240px;border-radius:var(--radius)}
+
+  footer{background:var(--ink);color:#c9d8d6;padding:36px 0;font-size:15px}
+  .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+  footer a{color:#9fe3da}
+
+  .wa-float{position:fixed;right:18px;bottom:18px;width:58px;height:58px;border-radius:50%;background:#1f9d55;display:grid;place-items:center;box-shadow:0 8px 22px rgba(0,0,0,.25);z-index:20}
+
+  @media (max-width:900px){
+    .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr}
+    .cards{grid-template-columns:repeat(2,1fr)}
+    .steps{grid-template-columns:1fr}
+    .hero{padding:48px 0 40px}
+    .hero-art{order:-1;max-height:260px}
+  }
+  @media (max-width:720px){
+    .menu-btn{display:block}
+    .nav ul{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line)}
+    .nav ul.open{display:flex}
+    .nav ul a{display:block;padding:14px 20px}
+    .nav .btn-primary{display:none}
+  }
+  @media (max-width:560px){
+    .cards{grid-template-columns:1fr}
+    section{padding:52px 0}
+    .wrap{padding:0 16px}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="demo-bar">Web de demostración · negocio ficticio · hecha por Denis García (<a href="mailto:dedavid22@gmail.com">contacto</a>)</div>
+
+<header>
+  <nav class="wrap nav" aria-label="Principal">
+    <a class="logo" href="#inicio" aria-label="Fisioterapia Mareas, inicio">
+      <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#0f766e"/><path d="M6 19c3-3 6-3 10 0s7 3 10 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M6 13c3-3 6-3 10 0s7 3 10 0" stroke="#9fe3da" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      Fisioterapia Mareas
+    </a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
+      <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <ul id="menu">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#como">Cómo funciona</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <a class="btn btn-primary" href="#contacto">Pedir cita</a>
+  </nav>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Las Palmas de Gran Canaria</span>
+        <h1>Vuelve a moverte sin dolor.</h1>
+        <p class="lead">Fisioterapia, masaje deportivo y rehabilitación con sesiones de una hora, de tú a tú.</p>
+        <div class="cta">
+          <a class="btn btn-wa" href="https://wa.me/?text=Hola%2C%20quiero%20pedir%20cita%20en%20Fisioterapia%20Mareas" target="_blank" rel="noopener">
+            <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.6-.1 1.1Z"/></svg>
+            Cita por WhatsApp
+          </a>
+          <a class="btn btn-ghost" href="#servicios">Ver servicios</a>
+        </div>
+        <div class="facts">
+          <div><b>60 min</b>por sesión</div>
+          <div><b>En el día</b>respuesta a tu cita</div>
+          <div><b>L–S</b>mañana y tarde</div>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 480 400" preserveAspectRatio="xMidYMid slice" width="100%" height="100%">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbe3c2"/><stop offset="1" stop-color="#cfe9e5"/></linearGradient>
+          </defs>
+          <rect width="480" height="400" fill="url(#sky)"/>
+          <circle cx="360" cy="120" r="54" fill="#e8a33d" opacity=".9"/>
+          <path d="M0 250c60-30 120-30 180 0s120 30 180 0 90-25 120-10v160H0Z" fill="#5fb3a8"/>
+          <path d="M0 290c60-30 120-30 180 0s120 30 180 0 90-25 120-10v120H0Z" fill="#0f766e"/>
+          <path d="M0 335c60-25 120-25 180 0s120 25 180 0 90-20 120-8v73H0Z" fill="#0b5953"/>
+          <g fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".7">
+            <path d="M60 270c20-10 40-10 60 0"/><path d="M260 310c20-10 40-10 60 0"/><path d="M380 350c15-8 30-8 45 0"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <div class="wrap">
+      <h2>Servicios</h2>
+      <p class="sub">Primera sesión con valoración incluida. Si no sabes cuál necesitas, escríbenos y te orientamos.</p>
+      <div class="cards">
+        <article class="card">
+          <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2" stroke-linecap="round"><path d="M12 3v18M5 8l7-5 7 5"/></svg></div>
+          <h3>Fisioterapia general</h3>
+          <p>Dolor de espalda, cuello y articulaciones. Valoración, tratamiento manual y pauta de ejercicios.</p>
+          <span class="price">45 € <small>/ sesión</small></span>
+        </article>
+        <article class="card">
+          <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v6l-4 8M12 13l4 8M6 10h12"/></svg></div>
+          <h3>Masaje deportivo</h3>
+          <p>Descarga antes o después de competir. Para corredores, surfistas y gimnasio.</p>
+          <span class="price">40 € <small>/ sesión</small></span>
+        </article>
+        <article class="card">
+          <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2" stroke-linecap="round"><path d="M4 20l6-6 4 4 6-10"/></svg></div>
+          <h3>Rehabilitación</h3>
+          <p>Recuperación tras lesión o cirugía, con objetivos claros y seguimiento por semanas.</p>
+          <span class="price">Bono 5 · 200 €</span>
+        </article>
+        <article class="card">
+          <div class="ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2" stroke-linecap="round"><path d="M3 12c3-3 6-3 9 0s6 3 9 0"/><path d="M3 17c3-3 6-3 9 0s6 3 9 0"/></svg></div>
+          <h3>Suelo pélvico</h3>
+          <p>Prevención y tratamiento en embarazo, posparto y menopausia, en un espacio privado.</p>
+          <span class="price">50 € <small>/ sesión</small></span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="nosotros" class="about">
+    <div class="wrap about-grid">
+      <div aria-hidden="true">
+        <svg viewBox="0 0 400 320" width="100%" style="border-radius:24px;background:#fff;box-shadow:var(--shadow)">
+          <rect x="40" y="200" width="320" height="22" rx="11" fill="#0f766e"/>
+          <rect x="70" y="222" width="12" height="60" fill="#0b5953"/><rect x="318" y="222" width="12" height="60" fill="#0b5953"/>
+          <circle cx="120" cy="172" r="24" fill="#e8a33d"/>
+          <rect x="146" y="166" width="170" height="30" rx="15" fill="#5fb3a8"/>
+          <circle cx="250" cy="92" r="20" fill="#16302e"/>
+          <path d="M250 112v50M250 128l-34 30M250 128l30 34" stroke="#16302e" stroke-width="12" stroke-linecap="round" fill="none"/>
+          <path d="M40 60c20-10 40-10 60 0" stroke="#cfe9e5" stroke-width="6" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <h2>Una clínica pequeña, a propósito</h2>
+        <p class="sub" style="margin-bottom:0">Atendemos a una persona cada hora. Sin máquinas de relleno ni sesiones compartidas: tu fisioterapeuta te trata de principio a fin.</p>
+        <ul class="checks">
+          <li><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#0f766e"/><path d="M7 12l3 3 7-7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>Fisioterapeutas colegiados</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#0f766e"/><path d="M7 12l3 3 7-7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>Informe y ejercicios por escrito tras cada sesión</li>
+          <li><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#0f766e"/><path d="M7 12l3 3 7-7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>Pago con tarjeta, Bizum o efectivo</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="como">
+    <div class="wrap">
+      <h2>Cómo funciona</h2>
+      <p class="sub">Tres pasos, sin llamadas ni esperas.</p>
+      <div class="steps">
+        <div class="step"><h3>Escríbenos</h3><p>Por WhatsApp o con el formulario. Cuéntanos qué te pasa en dos líneas.</p></div>
+        <div class="step"><h3>Te damos hora</h3><p>Te respondemos el mismo día con los huecos libres de la semana.</p></div>
+        <div class="step"><h3>Primera sesión</h3><p>Valoramos, tratamos y te llevas un plan claro para casa.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" style="padding-top:0">
+    <div class="wrap">
+      <h2>Pide tu cita</h2>
+      <p class="sub">Responderemos el mismo día laborable.</p>
+      <div class="contact-grid">
+        <form id="cita" novalidate>
+          <label>Nombre<input name="nombre" autocomplete="name" required></label>
+          <label>Teléfono o email<input name="contacto" autocomplete="tel" required></label>
+          <label>Servicio
+            <select name="servicio">
+              <option>Fisioterapia general</option><option>Masaje deportivo</option><option>Rehabilitación</option><option>Suelo pélvico</option><option>No lo sé</option>
+            </select>
+          </label>
+          <label>¿Qué te pasa?<textarea name="mensaje" placeholder="Ej.: dolor lumbar desde hace dos semanas"></textarea></label>
+          <button class="btn btn-primary" type="submit">Enviar solicitud</button>
+          <p class="form-ok" role="status" id="ok">Demostración: en la web real esta solicitud llega al email del negocio.</p>
+        </form>
+        <div class="info">
+          <div class="info-box">
+            <h3>Horario</h3>
+            <table class="hours">
+              <tr><td>Lunes a viernes</td><td>9:00–14:00 · 16:00–20:00</td></tr>
+              <tr><td>Sábado</td><td>9:00–13:00</td></tr>
+              <tr><td>Domingo</td><td>Cerrado</td></tr>
+            </table>
+          </div>
+          <iframe class="map" title="Mapa de la zona" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-15.4440%2C28.1300%2C-15.4240%2C28.1440&amp;layer=mapnik"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>© Fisioterapia Mareas · negocio ficticio de demostración</div>
+    <div>Web estática diseñada y construida por Denis García · <a href="mailto:dedavid22@gmail.com">¿Quieres una así?</a></div>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/?text=Hola%2C%20quiero%20pedir%20cita%20en%20Fisioterapia%20Mareas" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">
+  <svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.6-.1 1.1Z"/></svg>
+</a>
+
+<script>
+  const btn=document.querySelector('.menu-btn'), menu=document.getElementById('menu');
+  btn.addEventListener('click',()=>{const o=menu.classList.toggle('open');btn.setAttribute('aria-expanded',o)});
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.classList.remove('open');btn.setAttribute('aria-expanded','false')}));
+  const f=document.getElementById('cita');
+  f.addEventListener('submit',e=>{
+    e.preventDefault();
+    if(!f.checkValidity()){f.reportValidity();return}
+    document.getElementById('ok').style.display='block'; f.reset();
+  });
+</script>
+</body>
+</html>
