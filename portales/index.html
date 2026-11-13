@@ -332,7 +332,9 @@ $("search-form").onsubmit=async e=>{
  const cached=matchList(storedAddresses(),q);
  if(!navigator.onLine){
   if(cached.length===1){let xy=pointOf(cached[0]);map.setView(xy,19);showTarget(xy[0],xy[1],labelOf(cached[0]));status("Portal encontrado entre las direcciones descargadas.")}
-  else{resultsShow(cached,q);status(cached.length?"Selecciona el destino descargado.":"Ese portal no está en las zonas descargadas.",!cached.length)}
+  else if(cached.length){resultsShow(cached,q);status("Selecciona entre los portales exactos descargados.");}
+  else if(q.num&&nearbyOnSameStreet(q).length){showUnverifiedStreet(q);status("Sin conexión: el nº "+q.num+" no figura en tu descarga; sí hay referencias de la misma calle.",true)}
+  else{resultsShow([],q);status("Sin conexión: ese portal no está en las zonas guardadas.",true)}
   return;
  }
  status("Comprobando calle, número y localidad oficiales…");
