@@ -1,6 +1,6 @@
 // Portales GPS Tenerife: app shell disponible sin conexión.
 // NO descargar ni precargar teselas de los servidores tile.openstreetmap.org.
-const CACHE="portales-gps-shell-v1";
+const CACHE="portales-gps-shell-v2";
 const SHELL=["./","./index.html","./manifest.webmanifest"];
 const LIBS=[
  "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js",
@@ -35,12 +35,15 @@ self.addEventListener("fetch",event=>{
  event.respondWith((async()=>{
   const cache=await caches.open(CACHE);
   let cached=await cache.match(event.request);
-  if(cached)return cached;
+  // En linea: HTML actualizado primero. Offline: la copia almacenada.
+  // Librerias externas cache-first para permitir apertura sin cobertura.
+  if(external && cached)return cached;
   try{
    let res=await fetch(event.request);
    if(res.ok||res.type==="opaque")await cache.put(event.request,res.clone());
    return res;
   }catch(e){
+   if(cached)return cached;
    if(event.request.mode==="navigate")return await cache.match("./index.html");
    throw e;
   }
