@@ -50,7 +50,7 @@ const osm=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:
 const roadsLayer=L.layerGroup().addTo(map), labelsLayer=L.layerGroup().addTo(map), numbersLayer=L.layerGroup().addTo(map), routeLayer=L.layerGroup().addTo(map), pinLayer=L.layerGroup().addTo(map);
 const roadCanvas=L.canvas({padding:0.25});
 const LOCATIONS=[["Vilaflor",28.1590955,-16.6365089],["San Miguel casco",28.0992051,-16.6167914],["El Roque",28.0935886,-16.6356061],["La Montañita",28.0964973,-16.61081265],["Las Chafiras",28.0478736,-16.6227498],["Golf del Sur",28.0307407,-16.602699]];
-const app={zones:[],liveAddresses:[],offlineView:false,numbersOn:true,busy:false,packCancel:false,packRunning:false,gps:null,gpsMarker:null,gpsWatch:null,target:null,seq:0,refreshTimer:null,route:null};
+const app={zones:[],liveAddresses:[],offlineView:false,numbersOn:true,busy:false,packCancel:false,packRunning:false,gps:null,gpsMarker:null,gpsWatch:null,followGPS:false,searchFocus:false,target:null,seq:0,refreshTimer:null,route:null};
 const DB="portales-gps-tenerife",STORE="zones";
 function status(s,warn=false){$("status").textContent=s;$("status").className=warn?"warn":""}
 function safe(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -70,7 +70,7 @@ function closePanels(){$("results").style.display="none";for(const id of ["panel
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closePanels);
 function openPanel(id){closePanels();$(id).style.display="block"}
 function navLink(service,t){let dest=encodeURIComponent(t.lat+","+t.lon);return service==="google"?"https://www.google.com/maps/dir/?api=1&destination="+dest+"&travelmode=driving":"https://maps.apple.com/?daddr="+dest+"&dirflg=d"}
-function showTarget(lat,lon,name){app.target={lat,lon,name};$("destination").textContent=name;$("coordinate").textContent="Destino: "+lat.toFixed(6)+", "+lon.toFixed(6);$("google-route").href=navLink("google",app.target);$("apple-route").href=navLink("apple",app.target);$("stop-label").value=name;routeLayer.clearLayers();pinLayer.clearLayers();L.circleMarker([lat,lon],{radius:9,color:"#d7292d",weight:3,fillColor:"#ffd226",fillOpacity:1}).addTo(pinLayer);openPanel("panel")}
+function showTarget(lat,lon,name){app.followGPS=false;app.searchFocus=true;app.target={lat,lon,name};$("destination").textContent=name;$("coordinate").textContent="Destino: "+lat.toFixed(6)+", "+lon.toFixed(6);$("google-route").href=navLink("google",app.target);$("apple-route").href=navLink("apple",app.target);$("stop-label").value=name;routeLayer.clearLayers();pinLayer.clearLayers();L.circleMarker([lat,lon],{radius:9,color:"#d7292d",weight:3,fillColor:"#ffd226",fillOpacity:1}).addTo(pinLayer);openPanel("panel")}
 map.on("click",e=>showTarget(e.latlng.lat,e.latlng.lng,"Punto elegido"));
 function showStreetLabels(arr,b){
  labelsLayer.clearLayers();
@@ -277,7 +277,7 @@ async function refreshOnline(){
  try{
   let j=await collection("address",bbox,3,()=>{});if(seq!==app.seq)return;
   app.liveAddresses=j.features;showNumbers();
-  status(j.features.length+" números oficiales localizados"+(j.truncated?" · acerca más el mapa":"")+" · pulsa uno para navegar.");
+  if(!app.searchFocus)status(j.features.length+" números oficiales localizados"+(j.truncated?" · acerca más el mapa":"")+" · pulsa uno para navegar.");
  }catch(e){if(seq!==app.seq)return;showNumbers();status("No se pudo consultar IGN: aparecen los portales que tengas descargados.",true)}
 }
 function refreshSoon(){clearTimeout(app.refreshTimer);app.refreshTimer=setTimeout(refreshOnline,650)}
@@ -294,14 +294,44 @@ function listStops(){let root=$("stop-list");root.replaceChildren();let all=stop
   bt("Borrar",()=>{stopsSave(all.filter(x=>x.id!==p.id));listStops()});root.appendChild(row)}
 }
 $("gps").onclick=()=>{
- if(app.gpsWatch!==null){navigator.geolocation.clearWatch(app.gpsWatch);app.gpsWatch=null;if(app.gpsMarker)map.removeLayer(app.gpsMarker);app.gpsMarker=null;$("gps").innerHTML="⌖<br>Mi GPS";status("GPS detenido.");return}
+ if(app.gpsWatch!==null){
+  if(!app.followGPS){
+   // Retomar seguimiento sin apagar la búsqueda de ubicación del iPhone.
+   app.followGPS=true;app.searchFocus=false;
+   if(app.gps)map.setView([app.gps.lat,app.gps.lon],Math.max(17,map.getZoom()));
+   $("gps").innerHTML="■<br>Parar GPS";
+   status("Siguiendo tu ubicación. Al buscar una calle, dejaré el destino fijo en pantalla.");
+   return;
+  }
+  navigator.geolocation.clearWatch(app.gpsWatch);
+  app.gpsWatch=null;app.followGPS=false;app.searchFocus=false;
+  if(app.gpsMarker)map.removeLayer(app.gpsMarker);app.gpsMarker=null;
+  $("gps").innerHTML="⌖<br>Mi GPS";status("GPS detenido.");return;
+ }
  if(!("geolocation" in navigator)){status("Este navegador no tiene GPS.",true);return}
+ app.followGPS=true;app.searchFocus=false;
  status("Solicitando ubicación GPS…");
  app.gpsWatch=navigator.geolocation.watchPosition(p=>{
   app.gps={lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy};
-  if(!app.gpsMarker){app.gpsMarker=L.marker([app.gps.lat,app.gps.lon],{icon:L.divIcon({className:"number-icon",html:'<div class="mygps"></div>',iconSize:[20,20]})}).addTo(map)}
-  app.gpsMarker.setLatLng([app.gps.lat,app.gps.lon]);map.panTo([app.gps.lat,app.gps.lon]);$("gps").innerHTML="■<br>Parar GPS";status("GPS ±"+Math.round(app.gps.accuracy)+" m · selecciona el portal de destino.");
- },e=>{status("No se puede obtener GPS: "+e.message,true);if(app.gpsWatch!==null)navigator.geolocation.clearWatch(app.gpsWatch);app.gpsWatch=null},{enableHighAccuracy:true,maximumAge:5000,timeout:20000});
+  if(!app.gpsMarker){
+   app.gpsMarker=L.marker([app.gps.lat,app.gps.lon],{
+    icon:L.divIcon({className:"number-icon",html:'<div class="mygps"></div>',iconSize:[20,20]})
+   }).addTo(map);
+  }
+  app.gpsMarker.setLatLng([app.gps.lat,app.gps.lon]);
+  // SOLO recenter si el usuario ha elegido seguir al GPS.
+  if(app.followGPS){
+   map.panTo([app.gps.lat,app.gps.lon],{animate:false});
+   $("gps").innerHTML="■<br>Parar GPS";
+   if(!app.searchFocus)status("GPS ±"+Math.round(app.gps.accuracy)+" m · busca una dirección para verla sin perder el destino.");
+  }else{
+   $("gps").innerHTML="⌖<br>Ver mi GPS";
+  }
+ },e=>{
+  status("No se puede obtener GPS: "+e.message,true);
+  if(app.gpsWatch!==null)navigator.geolocation.clearWatch(app.gpsWatch);
+  app.gpsWatch=null;app.followGPS=false;
+ },{enableHighAccuracy:true,maximumAge:5000,timeout:20000});
 };
 // Búsqueda exacta: calle + número + localidad. Nunca ofrecer otros números como coincidencia.
 function parseQuery(raw){
@@ -354,7 +384,14 @@ function nearbyOnSameStreet(q){
    });
 }
 function showUnverifiedStreet(q){
+ app.followGPS=false;app.searchFocus=true;
  const nearby=nearbyOnSameStreet(q);
+ // Aunque falte el portal exacto, visitar visualmente la CALLE pedida,
+ // sin sustituir el nº solicitado por la coordenada de otra vivienda.
+ if(nearby.length){
+  const center=pointOf(nearby[0]);
+  map.setView(center,18,{animate:false});
+ }
  let el=$("results");el.replaceChildren();el.style.display="block";
  let header=document.createElement("button");
  header.disabled=true;
@@ -457,6 +494,10 @@ async function fallbackOfficialArea(q){
 $("search-form").onsubmit=async e=>{
  e.preventDefault();document.activeElement.blur();
  let raw=$("q").value.trim();if(!raw)return;
+ // Al buscar un destino, el GPS sigue obteniendo coordenadas, pero deja
+ // de mover el mapa hasta que el usuario pulse explícitamente «Mi GPS».
+ app.followGPS=false;app.searchFocus=true;
+ if(app.gpsWatch!==null)$("gps").innerHTML="⌖<br>Ver mi GPS";
  closePanels();const q=parseQuery(raw);
  if(!q.street){status("Escribe una calle y, si lo tienes, el número.",true);return}
  const cached=matchList(storedAddresses(),q);
