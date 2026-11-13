@@ -12,14 +12,23 @@
 header{position:absolute;z-index:1000;top:0;left:0;right:0;background:#fff;box-shadow:0 3px 12px #0003;padding:calc(7px + env(safe-area-inset-top)) 9px 9px}h1{font-size:15px;margin:0 0 8px;font-weight:800}#search-form{display:flex;gap:6px}#q{min-width:0;flex:1;border:1px solid #aab7c5;border-radius:9px;padding:11px 10px;font-size:16px;color:#17304a}button.yellow{background:#ffce26;color:#102b46;border:0;border-radius:9px;font-weight:800;padding:10px 13px}#status{font-size:12px;color:#435467;line-height:1.3;margin:6px 0 0;min-height:15px}.warn{color:#ae241e!important;font-weight:700}
 #menu{position:absolute;z-index:999;bottom:0;left:0;right:0;background:#fff;display:flex;gap:5px;box-shadow:0 -2px 9px #0002;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}#menu button{flex:1;min-width:0;background:#153452;color:#fff;border:0;border-radius:9px;font-size:12px;font-weight:730;min-height:53px;padding:5px}.offlinebtn{background:#ffd226!important;color:#1b3347!important}#results{position:absolute;z-index:1101;display:none;top:calc(120px + env(safe-area-inset-top));left:8px;right:8px;max-height:48%;overflow:auto;border-radius:12px;box-shadow:0 6px 20px #0004;background:#fff}#results button{border:0;border-bottom:1px solid #d7dce2;display:block;width:100%;text-align:left;background:#fff;padding:12px;color:#17304a;font-size:13px;line-height:1.4}
 #panel,#zones,#stops{display:none;position:absolute;z-index:1102;left:7px;right:7px;bottom:calc(76px + env(safe-area-inset-bottom));background:white;border-radius:14px;padding:13px;box-shadow:0 4px 24px #0005;max-height:65vh;overflow:auto}#zones,#stops{top:calc(127px + env(safe-area-inset-top));}h2{font-size:18px;margin:4px 29px 10px 0}p.note{font-size:12px;line-height:1.45;color:#506273;margin:6px 0}button.close{position:absolute;top:10px;right:9px;border:0;border-radius:7px;padding:5px 9px;background:#e7eaee;font-size:18px}.links{display:flex;gap:8px;margin:10px 0}.links a{flex:1;background:#193958;color:white;text-decoration:none;text-align:center;font-weight:800;font-size:14px;border-radius:10px;padding:14px 5px}.links a:first-child{background:#1969af}.row{display:flex;gap:7px;margin:8px 0;align-items:center}.row>*{min-width:0}.row input,.row select{flex:1;padding:10px 8px;border:1px solid #a9b5c2;border-radius:8px;font-size:15px}.row button{background:#ffcf27;border:0;border-radius:8px;padding:11px;font-weight:800}.subbutton{background:#dde6ec!important;font-weight:700!important}.entry{border-bottom:1px solid #e0e4e8;padding:8px 0;font-size:14px}.entry strong{display:block}.entry button{margin:6px 4px 0 0;background:#e6eff6;border:0;padding:8px;border-radius:7px;font-weight:700;color:#153452}
-.number-icon{background:transparent;border:0}.num{display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:#fffbd6;border:1px solid #47586a;border-radius:5px;box-shadow:0 1px 3px #0005;padding:2px 4px;color:#182e3f;font-size:12px;font-weight:900;min-width:20px;text-align:center}.num.highlight{background:#ffcf27;border:2px solid #da3535;font-size:15px}.streetname{font-size:11px;color:#415267;background:#ffffffc9;border-radius:3px;padding:2px 3px;white-space:nowrap}.mygps{background:#2186f9;width:17px;height:17px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 5px #3187e944}.offline-pill{position:absolute;z-index:900;bottom:calc(90px + env(safe-area-inset-bottom));left:8px;background:#fffbe3;border:1px solid #d8be54;color:#263d4e;border-radius:20px;padding:5px 8px;font-size:11px;font-weight:700;display:none}
+.number-icon{background:transparent;border:0}.num{display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:#fffbd6;border:1px solid #47586a;border-radius:5px;box-shadow:0 1px 3px #0005;padding:2px 4px;color:#182e3f;font-size:12px;font-weight:900;min-width:20px;text-align:center}.num.highlight{background:#ffcf27;border:2px solid #da3535;font-size:15px}.streetname{font-size:11px;color:#1a3045;background:#fffff2f2;border:1px solid #a8b7c4;border-radius:4px;padding:2px 5px;font-weight:800;white-space:nowrap;box-shadow:0 1px 2px #0002;transform:translate(-50%,-50%)}.mygps{background:#2186f9;width:17px;height:17px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 5px #3187e944}.offline-pill{position:absolute;z-index:900;bottom:calc(90px + env(safe-area-inset-bottom));left:8px;background:#fffbe3;border:1px solid #d8be54;color:#263d4e;border-radius:20px;padding:5px 8px;font-size:11px;font-weight:700;display:none}
 </style>
 </head><body>
 <div id="map"></div>
 <header><h1>📍 Portales GPS Tenerife · reparto</h1><form id="search-form"><input id="q" type="search" placeholder="Calle Isla de Lobos 37, San Isidro" enterkeyhint="search" autocomplete="off" aria-label="Buscar calle y número"><button class="yellow" type="submit">Buscar</button></form><p id="status" role="status">Iniciando callejero…</p></header>
 <div id="results"></div><div id="offline-pill" class="offline-pill">Mapa guardado en el iPhone</div>
 <div id="panel"><button class="close" data-close>×</button><h2 id="destination">Portal</h2><p id="coordinate" class="note"></p><div class="links"><a id="google-route" target="_blank" rel="noopener">▶ Google Maps</a><a id="apple-route" target="_blank" rel="noopener">↗ Apple Maps</a></div><button class="yellow" id="offline-route" style="width:100%;padding:14px">⌁ Trazar recorrido sin conexión</button><p class="note">Recorrido offline orientativo: no comprueba giros prohibidos, sentidos únicos ni accesos. Para navegación por voz sin red, utiliza CoMaps con Tenerife descargado.</p><div class="row"><input id="stop-label" placeholder="Nombre de parada"><button id="save-stop">Guardar</button></div></div>
-<div id="zones"><button class="close" data-close>×</button><h2>Mapas sin conexión</h2><p class="note"><b>Antes de salir, con Wi-Fi:</b> busca y centra la zona, ponle nombre y pulsa «Descargar». Se guardarán carreteras y números reales de esa zona en el iPhone; puedes repetir para zonas rurales distintas.</p>
+<div id="zones"><button class="close" data-close>×</button><h2>Mapas sin conexión · reparto completo</h2><p class="note"><b>San Miguel de Abona + acceso a Vilaflor + Golf del Sur.</b> Descarga los sectores antes del reparto con Wi-Fi. Se guardan carreteras y portales oficiales, con nombres de vías disponibles. No necesitas descargar uno por uno.</p>
+<div style="border:2px solid #ffce26;border-radius:12px;padding:10px;margin-bottom:12px;background:#fffbed">
+<strong style="font-size:15px">🛵 Corredor completo: Vilaflor → Golf del Sur</strong>
+<p class="note">Incluye zona alta, El Frontón, San Miguel casco, El Roque, Tamaide, Las Zocas, Aldea Blanca, Oroteanda, Llano del Camello, Las Chafiras, Guargacho y costa. Descargarás varios sectores consecutivos y podrás reanudar los que falten.</p>
+<button class="yellow" id="download-corridor" style="width:100%;padding:14px">⬇ Preparar TODO el reparto sin conexión</button>
+<button id="stop-corridor" style="width:100%;margin-top:7px;display:none;background:#e7ebef;border:0;padding:10px;border-radius:8px;font-weight:700">Detener después del sector actual</button>
+<p id="corridor-progress" class="note" role="status">Ninguna descarga iniciada.</p>
+<div class="row"><button class="subbutton" id="see-corridor">Ver toda la zona</button><button class="subbutton" id="see-sanmiguel">Ir a San Miguel casco</button></div>
+</div>
+<p class="note"><b>O descarga una zona adicional concreta:</b> centra el mapa, elige el radio y pulsa descargar.</p>
 <div class="row"><input id="zone-name" value="Mi zona de reparto" aria-label="Nombre de zona"><select id="radius" aria-label="Radio de la zona"><option value=".75">750 m</option><option value="1.25" selected>1,25 km</option><option value="2">2 km</option></select></div>
 <button class="yellow" id="download" style="width:100%;padding:13px">⬇ Descargar zona centrada en mapa</button><p id="progress" class="note"></p>
 <div class="row"><button id="offline-toggle" class="yellow">🗺 Probar mapa descargado</button><button id="online-toggle" class="subbutton">🌐 Ver mapa online</button></div>
@@ -32,12 +41,14 @@ header{position:absolute;z-index:1000;top:0;left:0;right:0;background:#fff;box-s
 (function(){
 "use strict";
 const $=id=>document.getElementById(id);
-const DEFAULT=[28.07437,-16.55288];
-const map=L.map("map",{zoomControl:false,preferCanvas:true}).setView(DEFAULT,18);
+// San Miguel casco: el usuario reparte por todo el corredor, no únicamente San Isidro.
+const DEFAULT=[28.0992051,-16.6167914];
+const CORRIDOR_BOUNDS=[[28.007,-16.669],[28.177,-16.586]];
+const map=L.map("map",{zoomControl:false,preferCanvas:true}).setView(DEFAULT,16);
 L.control.zoom({position:"topright"}).addTo(map);
 const osm=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:21,maxNativeZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(map);
 const roadsLayer=L.layerGroup().addTo(map), labelsLayer=L.layerGroup().addTo(map), numbersLayer=L.layerGroup().addTo(map), routeLayer=L.layerGroup().addTo(map), pinLayer=L.layerGroup().addTo(map);
-const app={zones:[],liveAddresses:[],offlineView:false,numbersOn:true,busy:false,gps:null,gpsMarker:null,gpsWatch:null,target:null,seq:0,refreshTimer:null,route:null};
+const app={zones:[],liveAddresses:[],offlineView:false,numbersOn:true,busy:false,packCancel:false,packRunning:false,gps:null,gpsMarker:null,gpsWatch:null,target:null,seq:0,refreshTimer:null,route:null};
 const DB="portales-gps-tenerife",STORE="zones";
 function status(s,warn=false){$("status").textContent=s;$("status").className=warn?"warn":""}
 function safe(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
@@ -59,28 +70,66 @@ function openPanel(id){closePanels();$(id).style.display="block"}
 function navLink(service,t){let dest=encodeURIComponent(t.lat+","+t.lon);return service==="google"?"https://www.google.com/maps/dir/?api=1&destination="+dest+"&travelmode=driving":"https://maps.apple.com/?daddr="+dest+"&dirflg=d"}
 function showTarget(lat,lon,name){app.target={lat,lon,name};$("destination").textContent=name;$("coordinate").textContent="Destino: "+lat.toFixed(6)+", "+lon.toFixed(6);$("google-route").href=navLink("google",app.target);$("apple-route").href=navLink("apple",app.target);$("stop-label").value=name;routeLayer.clearLayers();pinLayer.clearLayers();L.circleMarker([lat,lon],{radius:9,color:"#d7292d",weight:3,fillColor:"#ffd226",fillOpacity:1}).addTo(pinLayer);openPanel("panel")}
 map.on("click",e=>showTarget(e.latlng.lat,e.latlng.lng,"Punto elegido"));
-function showNumbers(){
- numbersLayer.clearLayers();labelsLayer.clearLayers();if(!app.numbersOn)return;
- let arr=app.offlineView?storedAddresses():unique(app.liveAddresses.concat(storedAddresses()));
- const b=map.getBounds();let count=0,labels=new Set();
- for(let f of arr){
+function showStreetLabels(arr,b){
+ labelsLayer.clearLayers();
+ if(!app.offlineView||map.getZoom()<15)return;
+ // Las vías de IGN incluyen el nombre en cada dirección; esta capa los muestra
+ // incluso donde las teselas de OSM/Google no están disponibles.
+ const byName=new Map(),taken=[];
+ for(const f of arr){
   if(!f.geometry||f.geometry.type!=="Point"||!inView(f,b))continue;
-  let xy=pointOf(f),p=f.properties||{},n=pnum(p);if(!n)continue;
-  if(count++>1600)break;
+  const p=f.properties||{},name=p.component_ThoroughfareName||"";
+  if(!name||name.length<4)continue;
+  const muni=p.component_AdminUnitName_4||"";
+  const id=normalized(name)+"_"+normalized(muni);
+  if(!byName.has(id))byName.set(id,{name,points:[]});
+  const points=byName.get(id).points;
+  if(points.length<22)points.push(pointOf(f));
+ }
+ // Al alejar, evitar saturación; al acercar, más rótulos identificables.
+ const size=map.getSize(),minDist=map.getZoom()<=16?90:map.getZoom()<=18?105:125;
+ for(const {name,points} of byName.values()){
+  const pos=points[Math.floor(points.length/2)],pixel=map.latLngToContainerPoint(pos);
+  if(pixel.x<40||pixel.x>size.x-40||pixel.y<160||pixel.y>size.y-80)continue;
+  if(taken.some(p=>Math.hypot(p.x-pixel.x,p.y-pixel.y)<minDist))continue;
+  taken.push(pixel);
+  L.marker(pos,{interactive:false,keyboard:false,icon:L.divIcon({className:"number-icon",html:'<span class="streetname">'+safe(name)+'</span>',iconSize:[1,1],iconAnchor:[0,0]})}).addTo(labelsLayer);
+  if(taken.length>=45)break;
+ }
+}
+function showNumbers(){
+ numbersLayer.clearLayers();
+ const arr=app.offlineView?storedAddresses():unique(app.liveAddresses.concat(storedAddresses()));
+ const b=map.getBounds();
+ showStreetLabels(arr,b);
+ if(!app.numbersOn||map.getZoom()<15)return;
+ let count=0;
+ for(const f of arr){
+  if(!f.geometry||f.geometry.type!=="Point"||!inView(f,b))continue;
+  const xy=pointOf(f),p=f.properties||{},n=pnum(p);if(!n)continue;
+  if(count++>1100)break;
   let icon=L.divIcon({className:"number-icon",html:'<span class="num">'+safe(n)+'</span>',iconSize:[1,1],iconAnchor:[0,0]});
   L.marker(xy,{icon,keyboard:true}).on("click",e=>{L.DomEvent.stopPropagation(e);showTarget(xy[0],xy[1],labelOf(f))}).addTo(numbersLayer);
-  let name=p.component_ThoroughfareName||"";
-  if(app.offlineView&&name&&map.getZoom()<=17&&!labels.has(name)){labels.add(name);L.marker(xy,{interactive:false,icon:L.divIcon({className:"number-icon",html:'<span class="streetname">'+safe(name)+'</span>',iconSize:[1,1]})}).addTo(labelsLayer)}
  }
 }
 function showRoads(){
- roadsLayer.clearLayers();if(!app.offlineView)return;
- for(let f of storedRoads()){
-  if(!f.geometry)continue;
-  if(!["LineString","MultiLineString"].includes(f.geometry.type))continue;
-  let line=L.geoJSON(f,{style:{color:"#a7b5c0",weight:7,opacity:.9},interactive:false});
-  line.addTo(roadsLayer);
-  L.geoJSON(f,{style:{color:"#ffffff",weight:4,opacity:1},interactive:false}).addTo(roadsLayer);
+ roadsLayer.clearLayers();
+ if(!app.offlineView)return;
+ const bounds=map.getBounds().pad(.3);
+ // Evita crear miles de objetos DOM fuera de pantalla en el iPhone SE.
+ let drawn=0;
+ for(const f of storedRoads()){
+  const geom=f.geometry;if(!geom)continue;
+  const parts=geom.type==="LineString"?[geom.coordinates]:geom.type==="MultiLineString"?geom.coordinates:[];
+  for(const pts of parts){
+   if(!pts||pts.length<2)continue;
+   const line=pts.map(v=>[v[1],v[0]]);
+   if(!line.some(p=>bounds.contains(p)))continue;
+   L.polyline(line,{color:"#97a9b7",weight:7,opacity:.95,interactive:false,renderer:L.canvas()}).addTo(roadsLayer);
+   L.polyline(line,{color:"#fafafa",weight:4,opacity:1,interactive:false,renderer:L.canvas()}).addTo(roadsLayer);
+   if(++drawn>1200)break;
+  }
+  if(drawn>1200)break;
  }
 }
 function updateView(){
@@ -111,6 +160,74 @@ async function collection(coll,b,maxPages,progress){
  return {features,truncated,pages};
 }
 async function loadZones(){try{app.zones=await dbAll();updateView()}catch(e){status("No se puede acceder al almacenamiento del iPhone.",true)}}
+// Centros verificados o interpolados entre núcleos, con solapamiento
+// para cubrir de la zona alta de Vilaflor a Golf del Sur.
+const CORRIDOR_PACKS=[
+ {id:"vilaflor",name:"Vilaflor y salida hacia San Miguel",lat:28.1591,lon:-16.6365,km:1.65},
+ {id:"alto",name:"Acceso norte / subida Vilaflor",lat:28.1430,lon:-16.6280,km:1.65},
+ {id:"fronton",name:"El Frontón y medianías altas",lat:28.1210,lon:-16.6150,km:1.65},
+ {id:"centro",name:"San Miguel casco y Tamaide",lat:28.0992051,lon:-16.6167914,km:1.65},
+ {id:"roque",name:"El Roque / caseríos oeste",lat:28.0935886,lon:-16.6356061,km:1.65},
+ {id:"montanita",name:"La Montañita / caminos rurales",lat:28.0964973,lon:-16.61081265,km:1.6},
+ {id:"zocas",name:"Las Zocas / medianías",lat:28.0800,lon:-16.6235,km:1.75},
+ {id:"aldea",name:"Aldea Blanca / entorno rural",lat:28.0680,lon:-16.6370,km:1.75},
+ {id:"llano",name:"Llano del Camello",lat:28.0610,lon:-16.6080,km:1.7},
+ {id:"oroteanda",name:"Oroteanda y enlaces",lat:28.0620,lon:-16.6250,km:1.7},
+ {id:"chafiras",name:"Las Chafiras",lat:28.0478736,lon:-16.6227498,km:1.7},
+ {id:"guargacho",name:"Guargacho y diseminados",lat:28.0380,lon:-16.6360,km:1.7},
+ {id:"golf",name:"Golf del Sur y costa",lat:28.0307407,lon:-16.602699,km:1.75},
+ {id:"amarilla",name:"Amarilla Golf / costa occidental",lat:28.0250,lon:-16.6180,km:1.65}
+];
+$("see-corridor").onclick=()=>{closePanels();map.fitBounds(CORRIDOR_BOUNDS,{padding:[25,20]});status("Zona completa: Vilaflor → San Miguel → Golf del Sur.")};
+$("see-sanmiguel").onclick=()=>{closePanels();map.setView(DEFAULT,17)};
+$("stop-corridor").onclick=()=>{app.packCancel=true;$("corridor-progress").textContent="Se detendrá cuando acabe el sector en curso; los anteriores quedan guardados."};
+async function downloadPack(p,step,total){
+ const id="corridor-"+p.id;
+ if(app.zones.find(z=>z.id===id&&!z.partial))return {skipped:true};
+ const bbox=bboxFor(p.lat,p.lon,p.km);
+ const say=(phase,page)=>{$("corridor-progress").textContent="Sector "+step+"/"+total+": "+p.name+" · "+(phase==="address"?"portales":"carreteras")+" · página "+page+"…"};
+ const roads=await collection("roadlink",bbox,18,say);
+ const addresses=await collection("address",bbox,22,say);
+ if(!roads.features.length&&!addresses.features.length)throw Error("sin datos geográficos");
+ const value={id,name:p.name,center:[p.lat,p.lon],bbox,roads:roads.features,addresses:addresses.features,date:new Date().toISOString(),partial:roads.truncated||addresses.truncated};
+ await dbPut(value);
+ // No recargar todo IndexedDB por cada página; refrescar al final del sector.
+ app.zones=app.zones.filter(z=>z.id!==id).concat([value]);
+ return {addresses:addresses.features.length,roads:roads.features.length,partial:value.partial};
+}
+$("download-corridor").onclick=async()=>{
+ if(app.busy||app.packRunning)return;
+ if(!navigator.onLine){$("corridor-progress").textContent="Necesitas conexión para preparar el paquete.";return}
+ app.packRunning=true;app.packCancel=false;app.busy=true;
+ $("download-corridor").disabled=true;$("download").disabled=true;$("stop-corridor").style.display="block";
+ let ok=0,skip=0,failed=[],partial=[];
+ const total=CORRIDOR_PACKS.length;
+ try{
+  for(let i=0;i<total;i++){
+   if(app.packCancel)break;
+   const p=CORRIDOR_PACKS[i];
+   try{
+    let res=await downloadPack(p,i+1,total);
+    if(res.skipped)skip++;
+    else{ok++;if(res.partial)partial.push(p.name)}
+   }catch(e){failed.push(p.name+": "+(e?.message||"error de red"))}
+   $("corridor-progress").textContent="Reparto "+(i+1)+"/"+total+" sectores procesados · "+(ok+skip)+" guardados"+(failed.length?" · "+failed.length+" sin completar":"");
+   // No saturar el servicio del IGN; facilitar cancelar y seguir procesando UI.
+   await new Promise(resolve=>setTimeout(resolve,450));
+  }
+  app.zones=await dbAll();
+  updateView();listZones();
+  if(navigator.storage?.persist)navigator.storage.persist().catch(()=>{});
+  let names=partial.length?" Sectores parciales: "+partial.join(", ")+".":"";
+  let missing=failed.length?" Pendientes: "+failed.map(x=>x.split(":")[0]).join(", ")+".":"";
+  $("corridor-progress").textContent=(app.packCancel?"Descarga detenida. ":"Proceso terminado. ")+(ok+skip)+"/"+total+" sectores disponibles en el iPhone."+names+missing;
+  status((ok+skip)+"/"+total+" sectores descargados. Abre «Probar mapa descargado».",Boolean(failed.length||partial.length));
+ }finally{
+  app.busy=false;app.packRunning=false;$("stop-corridor").style.display="none";
+  $("download-corridor").disabled=false;$("download").disabled=false;app.packCancel=false;
+ }
+};
+
 async function downloadZone(){
  if(app.busy)return;if(!navigator.onLine){$("progress").textContent="Necesitas Wi-Fi o datos móviles para descargar.";return}
  let center=map.getCenter(),km=Number($("radius").value),b=bboxFor(center.lat,center.lng,km);
@@ -151,7 +268,7 @@ async function refreshOnline(){
  }catch(e){if(seq!==app.seq)return;showNumbers();status("No se pudo consultar IGN: aparecen los portales que tengas descargados.",true)}
 }
 function refreshSoon(){clearTimeout(app.refreshTimer);app.refreshTimer=setTimeout(refreshOnline,650)}
-map.on("moveend zoomend",()=>{showNumbers();refreshSoon()});
+map.on("moveend zoomend",()=>{if(app.offlineView)showRoads();showNumbers();refreshSoon()});
 function stopsLoad(){try{let x=JSON.parse(localStorage.getItem("tfe-portales-stops")||"[]");return Array.isArray(x)?x:[]}catch(e){return []}}
 function stopsSave(v){localStorage.setItem("tfe-portales-stops",JSON.stringify(v.slice(0,100)))}
 $("save-stop").onclick=()=>{let t=app.target;if(!t)return;let s=stopsLoad();s.unshift({...t,name:$("stop-label").value||t.name,id:Date.now(),done:false});stopsSave(s);closePanels();status("Parada guardada en este iPhone.")};
