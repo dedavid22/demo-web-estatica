@@ -208,6 +208,49 @@ function matchList(ary,q){
   return true;
  });
 }
+// Un portal puede existir en Correos/otras guías y faltar en el IGN.
+// Si la calle sí existe, mostrar referencias cercanas, SIN identificarlas como el destino.
+function nearbyOnSameStreet(q){
+ const all=unique(storedAddresses().concat(app.liveAddresses));
+ return all.filter(f=>f.geometry&&f.geometry.type==="Point"&&nearMatch(f,q)&&
+   (!q.municipality || normalized(f.properties?.component_AdminUnitName_4||"")===q.municipality))
+   .sort((a,b)=>{
+      const x=Number((a.properties||{}).locator_designator_addressNumber);
+      const y=Number((b.properties||{}).locator_designator_addressNumber);
+      const n=Number(q.num);
+      const ax=Number.isFinite(x)?Math.abs(x-n):100000;
+      const by=Number.isFinite(y)?Math.abs(y-n):100000;
+      return ax-by;
+   });
+}
+function showUnverifiedStreet(q){
+ const nearby=nearbyOnSameStreet(q);
+ let el=$("results");el.replaceChildren();el.style.display="block";
+ let header=document.createElement("button");
+ header.disabled=true;
+ header.textContent="⚠ El nº "+q.num+" NO está confirmado en CartoCiudad. No navegaré a otro portal como si fuera el tuyo.";
+ el.appendChild(header);
+ if(nearby.length){
+  let h=document.createElement("button");h.disabled=true;
+  h.textContent="La calle sí existe en "+(nearby[0].properties?.component_AdminUnitName_4||"Tenerife")+". Selecciona un número cercano solo como referencia para localizar el tramo.";el.appendChild(h);
+  for(let f of nearby.slice(0,8)){
+    const xy=pointOf(f),b=document.createElement("button");
+    b.textContent="Ver tramo próximo: "+labelOf(f)+" (no es el nº "+q.num+")";
+    b.onclick=()=>{map.setView(xy,19);closePanels();status("Zona aproximada de "+q.street+". El nº "+q.num+" NO está localizado: toca el edificio correcto en el mapa antes de navegar.",true)};
+    el.appendChild(b);
+  }
+  let choose=document.createElement("button");choose.textContent="📍 Elegir el nº "+q.num+" manualmente en el mapa";
+  choose.onclick=()=>{map.setView(pointOf(nearby[0]),19);closePanels();status("Busca visualmente el edificio nº "+q.num+" y tócalo. Comprueba la dirección antes de navegar.",true)};
+  el.appendChild(choose);
+ }else{
+  let h=document.createElement("button");h.disabled=true;
+  h.textContent="No hay portales de esa calle en las zonas consultadas. Amplía o desplázate por el mapa y selecciona el punto exacto.";el.appendChild(h);
+ }
+ let ext=document.createElement("button");ext.textContent="Buscar esta dirección en Google Maps (verificar allí)";
+ ext.onclick=()=>window.open("https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q.raw+", Tenerife"),"_blank");
+ el.appendChild(ext);
+ let close=document.createElement("button");close.textContent="Cerrar";close.onclick=()=>el.style.display="none";el.appendChild(close);
+}
 function resultsShow(items,q){
  let el=$("results");el.replaceChildren();el.style.display="block";
  if(!items.length){
@@ -309,8 +352,8 @@ $("search-form").onsubmit=async e=>{
    let fallback=await fallbackOfficialArea(q);
    if(fallback.length===1){let xy=pointOf(fallback[0]);map.setView(xy,19);showTarget(xy[0],xy[1],labelOf(fallback[0]));status("Portal "+q.num+" encontrado en las direcciones oficiales del IGN.")}
    else if(fallback.length){resultsShow(fallback,q);status("Se han encontrado portales "+q.num+" de esa calle. Elige la dirección.");}
-   else{resultsShow([],q);status("No está verificado el nº "+q.num+" de esta calle y localidad."+(serverFailure?" El servidor oficial no respondió.":""),true)}
-  }catch(err){resultsShow([],q);status("No se pudo comprobar el nº "+q.num+" en los datos oficiales. Prueba de nuevo con conexión.",true)}
+   else{showUnverifiedStreet(q);status("No se confirma el nº "+q.num+". He localizado referencias de la misma calle para que marques manualmente el portal.",true)}
+  }catch(err){showUnverifiedStreet(q);status("La comprobación oficial falló. Puedes ver el tramo de calle o tocar el portal manualmente.",true)}
   return;
  }
  // Búsqueda sin número: localizar la calle, pero no inventar un portal.
