@@ -48,6 +48,7 @@ const map=L.map("map",{zoomControl:false,preferCanvas:true}).setView(DEFAULT,16)
 L.control.zoom({position:"topright"}).addTo(map);
 const osm=L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:21,maxNativeZoom:19,attribution:"© OpenStreetMap contributors"}).addTo(map);
 const roadsLayer=L.layerGroup().addTo(map), labelsLayer=L.layerGroup().addTo(map), numbersLayer=L.layerGroup().addTo(map), routeLayer=L.layerGroup().addTo(map), pinLayer=L.layerGroup().addTo(map);
+const roadCanvas=L.canvas({padding:0.25});
 const app={zones:[],liveAddresses:[],offlineView:false,numbersOn:true,busy:false,packCancel:false,packRunning:false,gps:null,gpsMarker:null,gpsWatch:null,target:null,seq:0,refreshTimer:null,route:null};
 const DB="portales-gps-tenerife",STORE="zones";
 function status(s,warn=false){$("status").textContent=s;$("status").className=warn?"warn":""}
@@ -125,8 +126,8 @@ function showRoads(){
    if(!pts||pts.length<2)continue;
    const line=pts.map(v=>[v[1],v[0]]);
    if(!line.some(p=>bounds.contains(p)))continue;
-   L.polyline(line,{color:"#97a9b7",weight:7,opacity:.95,interactive:false,renderer:L.canvas()}).addTo(roadsLayer);
-   L.polyline(line,{color:"#fafafa",weight:4,opacity:1,interactive:false,renderer:L.canvas()}).addTo(roadsLayer);
+   L.polyline(line,{color:"#97a9b7",weight:7,opacity:.95,interactive:false,renderer:roadCanvas}).addTo(roadsLayer);
+   L.polyline(line,{color:"#fafafa",weight:4,opacity:1,interactive:false,renderer:roadCanvas}).addTo(roadsLayer);
    if(++drawn>1200)break;
   }
   if(drawn>1200)break;
