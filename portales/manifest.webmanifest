@@ -1,0 +1,12 @@
+{
+  "name": "Portales GPS Tenerife",
+  "short_name": "Portales GPS",
+  "id": "/portales/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#e8eef0",
+  "theme_color": "#ffce26",
+  "lang": "es",
+  "description": "GPS de reparto con números de portal y zonas descargables de Tenerife"
+}
