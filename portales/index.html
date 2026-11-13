@@ -9,16 +9,26 @@
 <style>
 *{box-sizing:border-box}html,body{margin:0;height:100%;overscroll-behavior:none;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17304a;background:#e4e9ee}button,input,select{font:inherit}button{cursor:pointer}
 #map{position:absolute;inset:0;background:#e8eef0;z-index:0}.leaflet-container{font-family:inherit!important}.leaflet-control-zoom{margin-top:155px!important}.leaflet-control-zoom a{height:38px!important;width:38px!important;line-height:38px!important}.leaflet-control-attribution{font-size:9px!important;margin-bottom:calc(88px + env(safe-area-inset-bottom))!important}
-header{position:absolute;z-index:1000;top:0;left:0;right:0;background:#fff;box-shadow:0 3px 12px #0003;padding:calc(7px + env(safe-area-inset-top)) 9px 9px}h1{font-size:15px;margin:0 0 8px;font-weight:800}#search-form{display:flex;gap:6px}#q{min-width:0;flex:1;border:1px solid #aab7c5;border-radius:9px;padding:11px 10px;font-size:16px;color:#17304a}button.yellow{background:#ffce26;color:#102b46;border:0;border-radius:9px;font-weight:800;padding:10px 13px}#status{font-size:12px;color:#435467;line-height:1.3;margin:6px 0 0;min-height:15px}.warn{color:#ae241e!important;font-weight:700}
+header{position:absolute;z-index:1000;top:0;left:0;right:0;background:#fff;box-shadow:0 3px 12px #0003;padding:calc(7px + env(safe-area-inset-top)) 9px 9px}h1{font-size:15px;margin:0 0 8px;font-weight:800}#search-form{display:flex;gap:6px}#scan-label{flex:0 0 46px;min-width:46px;border:0;border-radius:9px;background:#173f5c;color:white;font-size:23px;min-height:44px;padding:0}#q{min-width:0;flex:1;border:1px solid #aab7c5;border-radius:9px;padding:11px 10px;font-size:16px;color:#17304a}button.yellow{background:#ffce26;color:#102b46;border:0;border-radius:9px;font-weight:800;padding:10px 13px}#status{font-size:12px;color:#435467;line-height:1.3;margin:6px 0 0;min-height:15px}.warn{color:#ae241e!important;font-weight:700}
 #menu{position:absolute;z-index:999;bottom:0;left:0;right:0;background:#fff;display:flex;gap:5px;box-shadow:0 -2px 9px #0002;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}#menu button{flex:1;min-width:0;background:#153452;color:#fff;border:0;border-radius:9px;font-size:12px;font-weight:730;min-height:53px;padding:5px}.offlinebtn{background:#ffd226!important;color:#1b3347!important}#results{position:absolute;z-index:1101;display:none;top:calc(120px + env(safe-area-inset-top));left:8px;right:8px;max-height:48%;overflow:auto;border-radius:12px;box-shadow:0 6px 20px #0004;background:#fff}#results button{border:0;border-bottom:1px solid #d7dce2;display:block;width:100%;text-align:left;background:#fff;padding:12px;color:#17304a;font-size:13px;line-height:1.4}
-#panel,#zones,#stops{display:none;position:absolute;z-index:1102;left:7px;right:7px;bottom:calc(76px + env(safe-area-inset-bottom));background:white;border-radius:14px;padding:13px;box-shadow:0 4px 24px #0005;max-height:65vh;overflow:auto}#zones,#stops{top:calc(127px + env(safe-area-inset-top));}h2{font-size:18px;margin:4px 29px 10px 0}p.note{font-size:12px;line-height:1.45;color:#506273;margin:6px 0}button.close{position:absolute;top:10px;right:9px;border:0;border-radius:7px;padding:5px 9px;background:#e7eaee;font-size:18px}.links{display:flex;gap:8px;margin:10px 0}.links a{flex:1;background:#193958;color:white;text-decoration:none;text-align:center;font-weight:800;font-size:14px;border-radius:10px;padding:14px 5px}.links a:first-child{background:#1969af}.row{display:flex;gap:7px;margin:8px 0;align-items:center}.row>*{min-width:0}.row input,.row select{flex:1;padding:10px 8px;border:1px solid #a9b5c2;border-radius:8px;font-size:15px}.row button{background:#ffcf27;border:0;border-radius:8px;padding:11px;font-weight:800}.subbutton{background:#dde6ec!important;font-weight:700!important}.entry{border-bottom:1px solid #e0e4e8;padding:8px 0;font-size:14px}.entry strong{display:block}.entry button{margin:6px 4px 0 0;background:#e6eff6;border:0;padding:8px;border-radius:7px;font-weight:700;color:#153452}
+#panel,#zones,#stops,#scan-panel{display:none;position:absolute;z-index:1102;left:7px;right:7px;bottom:calc(76px + env(safe-area-inset-bottom));background:white;border-radius:14px;padding:13px;box-shadow:0 4px 24px #0005;max-height:65vh;overflow:auto}#zones,#stops{top:calc(127px + env(safe-area-inset-top));}#scan-panel{z-index:1200;top:calc(125px + env(safe-area-inset-top));bottom:auto;max-height:70vh;overflow:auto}#scan-address{width:100%;padding:13px;font-size:17px;border:2px solid #ffce26;border-radius:9px;outline-color:#e1aa00}#scan-action{width:100%;min-height:52px;margin-top:10px}#scan-progress{font-weight:700;color:#1e4260;margin-bottom:8px}#scan-photo{font-size:12px;color:#455d71}#scan-note{color:#9f341d;font-weight:700}h2{font-size:18px;margin:4px 29px 10px 0}p.note{font-size:12px;line-height:1.45;color:#506273;margin:6px 0}button.close{position:absolute;top:10px;right:9px;border:0;border-radius:7px;padding:5px 9px;background:#e7eaee;font-size:18px}.links{display:flex;gap:8px;margin:10px 0}.links a{flex:1;background:#193958;color:white;text-decoration:none;text-align:center;font-weight:800;font-size:14px;border-radius:10px;padding:14px 5px}.links a:first-child{background:#1969af}.row{display:flex;gap:7px;margin:8px 0;align-items:center}.row>*{min-width:0}.row input,.row select{flex:1;padding:10px 8px;border:1px solid #a9b5c2;border-radius:8px;font-size:15px}.row button{background:#ffcf27;border:0;border-radius:8px;padding:11px;font-weight:800}.subbutton{background:#dde6ec!important;font-weight:700!important}.entry{border-bottom:1px solid #e0e4e8;padding:8px 0;font-size:14px}.entry strong{display:block}.entry button{margin:6px 4px 0 0;background:#e6eff6;border:0;padding:8px;border-radius:7px;font-weight:700;color:#153452}
 .number-icon{background:transparent;border:0}.num{display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:#fffbd6;border:1px solid #47586a;border-radius:5px;box-shadow:0 1px 3px #0005;padding:2px 4px;color:#182e3f;font-size:12px;font-weight:900;min-width:20px;text-align:center}.num.highlight{background:#ffcf27;border:2px solid #da3535;font-size:15px}.streetname{font-size:12px;color:#1a3045;background:#fffff2f2;border:1px solid #a8b7c4;border-radius:4px;padding:2px 5px;font-weight:800;white-space:nowrap;box-shadow:0 1px 2px #0002;transform:translate(-50%,-50%)}.mygps{background:#2186f9;width:17px;height:17px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 5px #3187e944}.offline-pill{position:absolute;z-index:900;bottom:calc(90px + env(safe-area-inset-bottom));left:8px;background:#fffbe3;border:1px solid #d8be54;color:#263d4e;border-radius:20px;padding:5px 8px;font-size:11px;font-weight:700;display:none}
 </style>
 </head><body>
 <div id="map"></div>
-<header><h1>📍 Portales GPS Tenerife · reparto</h1><form id="search-form"><input id="q" type="search" placeholder="Calle Isla de Lobos 37, San Isidro" enterkeyhint="search" autocomplete="off" aria-label="Buscar calle y número"><button class="yellow" type="submit">Buscar</button></form><p id="status" role="status">Iniciando callejero…</p></header>
-<div id="results"></div><div id="offline-pill" class="offline-pill">Mapa guardado en el iPhone</div>
-<div id="panel"><button class="close" data-close>×</button><h2 id="destination">Portal</h2><p id="coordinate" class="note"></p><div class="links"><a id="google-route" target="_blank" rel="noopener">▶ Google Maps</a><a id="apple-route" target="_blank" rel="noopener">↗ Apple Maps</a></div><button class="yellow" id="offline-route" style="width:100%;padding:14px">⌁ Trazar recorrido sin conexión</button><p class="note">Recorrido offline orientativo: no comprueba giros prohibidos, sentidos únicos ni accesos. Para navegación por voz sin red, utiliza CoMaps con Tenerife descargado.</p><div class="row"><input id="stop-label" placeholder="Nombre de parada"><button id="save-stop">Guardar</button></div></div>
+<header><h1>📍 Portales GPS Tenerife · reparto</h1><form id="search-form"><input id="q" type="search" placeholder="Calle Iglesia 7, San Miguel" enterkeyhint="search" autocomplete="off" aria-label="Buscar calle y número"><button id="scan-label" type="button" aria-label="Fotografiar dirección de Correos" title="Fotografiar etiqueta">📷</button><button class="yellow" type="submit">Buscar</button></form><input id="scan-file" type="file" accept="image/*" capture="environment" hidden><input id="scan-gallery" type="file" accept="image/*" hidden><p id="status" role="status">Iniciando callejero…</p></header>
+<div id="results"></div>
+<div id="scan-panel"><button class="close" data-close>×</button><h2>📷 Leer etiqueta de Correos</h2>
+<p id="scan-progress" role="status">Selecciona una foto con la dirección.</p>
+<p class="note">La lectura se realiza en este iPhone. No enviamos la foto ni el nombre del destinatario a nuestro servidor.</p>
+<label for="scan-address" style="display:block;font-weight:700;margin:10px 0 5px">Dirección reconocida (comprueba calle y número)</label>
+<input id="scan-address" autocomplete="off" placeholder="Ej.: Calle de la Iglesia 7, San Miguel de Abona">
+<p id="scan-note" class="note">Comprueba especialmente el número del portal. Piso y puerta no forman parte de la ruta GPS.</p>
+<button class="yellow" id="scan-action">🔎 Buscar este portal</button>
+<div class="row"><button id="scan-another" class="subbutton">📷 Repetir foto</button><button id="scan-gallery-button" class="subbutton">🖼 Elegir de Fotos</button></div>
+<p id="scan-photo" class="note">En etiquetas borrosas, puedes corregir la dirección antes de buscar. No se guarda la imagen.</p></div>
+<div id="offline-pill" class="offline-pill">Mapa guardado en el iPhone</div>
+<div id="panel"><button class="close" data-close>×</button><h2 id="destination">Portal</h2><p id="coordinate" class="note"></p><a id="apple-voice" target="_blank" rel="noopener" style="display:block;text-decoration:none;text-align:center;background:#ffce26;color:#102b46;border:0;border-radius:10px;padding:15px 8px;font-size:16px;font-weight:900;margin:9px 0">🔊 INICIAR NAVEGACIÓN CON VOZ</a><p class="note">Apple Maps intentará iniciar la ruta por carretera. Conecta antes el intercomunicador Bluetooth del casco y verifica el volumen.</p><div class="links"><a id="google-route" target="_blank" rel="noopener">▶ Google Maps</a><a id="apple-route" target="_blank" rel="noopener">↗ Apple Maps</a></div><button class="yellow" id="offline-route" style="width:100%;padding:14px">⌁ Trazar recorrido sin conexión</button><p class="note">Recorrido offline orientativo: no comprueba giros prohibidos, sentidos únicos ni accesos. Para navegación por voz sin red, utiliza CoMaps con Tenerife descargado.</p><div class="row"><input id="stop-label" placeholder="Nombre de parada"><button id="save-stop">Guardar</button></div></div>
 <div id="zones"><button class="close" data-close>×</button><h2>Mapas sin conexión · reparto completo</h2><p class="note"><b>San Miguel de Abona + acceso a Vilaflor + Golf del Sur.</b> Descarga los sectores antes del reparto con Wi-Fi. Se guardan carreteras y portales oficiales, con nombres de vías disponibles. No necesitas descargar uno por uno.</p>
 <div style="border:2px solid #ffce26;border-radius:12px;padding:10px;margin-bottom:12px;background:#fffbed">
 <strong style="font-size:15px">🛵 Corredor completo: Vilaflor → Golf del Sur</strong>
@@ -66,11 +76,118 @@ async function dbPut(value){let db=await dbOpen();return new Promise((resolve,re
 async function dbDelete(id){let db=await dbOpen();return new Promise((resolve,reject)=>{let tx=db.transaction(STORE,"readwrite");tx.objectStore(STORE).delete(id);tx.oncomplete=()=>{db.close();resolve()};tx.onerror=()=>reject(tx.error)})}
 const storedAddresses=()=>unique(app.zones.flatMap(z=>z.addresses||[]));
 const storedRoads=()=>unique(app.zones.flatMap(z=>z.roads||[]));
-function closePanels(){$("results").style.display="none";for(const id of ["panel","zones","stops"])$(id).style.display="none"}
+function closePanels(){$("results").style.display="none";for(const id of ["panel","zones","stops","scan-panel"])$(id).style.display="none"}
 document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closePanels);
 function openPanel(id){closePanels();$(id).style.display="block"}
-function navLink(service,t){let dest=encodeURIComponent(t.lat+","+t.lon);return service==="google"?"https://www.google.com/maps/dir/?api=1&destination="+dest+"&travelmode=driving":"https://maps.apple.com/?daddr="+dest+"&dirflg=d"}
-function showTarget(lat,lon,name){app.followGPS=false;app.searchFocus=true;app.target={lat,lon,name};$("destination").textContent=name;$("coordinate").textContent="Destino: "+lat.toFixed(6)+", "+lon.toFixed(6);$("google-route").href=navLink("google",app.target);$("apple-route").href=navLink("apple",app.target);$("stop-label").value=name;routeLayer.clearLayers();pinLayer.clearLayers();L.circleMarker([lat,lon],{radius:9,color:"#d7292d",weight:3,fillColor:"#ffd226",fillOpacity:1}).addTo(pinLayer);openPanel("panel")}
+function navLink(service,t){let dest=encodeURIComponent(t.lat+","+t.lon);return service==="google"?"https://www.google.com/maps/dir/?api=1&destination="+dest+"&travelmode=driving":"https://maps.apple.com/directions?destination="+dest+"&mode=driving"}
+function voiceRoute(t){return "https://maps.apple.com/directions?destination="+encodeURIComponent(t.lat+","+t.lon)+"&mode=driving&start=5"}
+function showTarget(lat,lon,name){app.followGPS=false;app.searchFocus=true;app.target={lat,lon,name};$("destination").textContent=name;$("coordinate").textContent="Destino: "+lat.toFixed(6)+", "+lon.toFixed(6);$("google-route").href=navLink("google",app.target);$("apple-route").href=navLink("apple",app.target);$("apple-voice").href=voiceRoute(app.target);$("stop-label").value=name;routeLayer.clearLayers();pinLayer.clearLayers();L.circleMarker([lat,lon],{radius:9,color:"#d7292d",weight:3,fillColor:"#ffd226",fillOpacity:1}).addTo(pinLayer);openPanel("panel")}
+
+// Fotografía local: OCR en navegador con Tesseract.js. Solo se utiliza la dirección,
+// nunca la información del destinatario ni el código de seguimiento.
+let photoWorker=null,photoLoading=null;
+const OCR_CDN="https://cdn.jsdelivr.net/npm/tesseract.js@6.0.1/dist/tesseract.min.js";
+function photoStatus(text){$("scan-progress").textContent=text}
+function loadPhotoLibrary(){
+ if(window.Tesseract)return Promise.resolve();
+ if(photoLoading)return photoLoading;
+ photoLoading=new Promise((resolve,reject)=>{
+  let script=document.createElement("script");script.src=OCR_CDN;script.async=true;
+  script.onload=()=>window.Tesseract?resolve():reject(Error("Motor OCR no disponible"));
+  script.onerror=()=>reject(Error("No se pudo descargar el lector de etiquetas. Requiere internet la primera vez."));
+  document.head.appendChild(script);
+ }).catch(e=>{photoLoading=null;throw e});
+ return photoLoading;
+}
+async function getPhotoWorker(){
+ if(photoWorker)return photoWorker;
+ await loadPhotoLibrary();
+ // Modelo de español. El texto se procesa localmente en el dispositivo.
+ photoWorker=await window.Tesseract.createWorker("spa",1,{
+  logger:m=>{if(m.status==="recognizing text"&&m.progress!=null)photoStatus("Leyendo etiqueta… "+Math.round(m.progress*100)+" %")}
+ });
+ return photoWorker;
+}
+function extractPostalAddress(ocrText){
+ const text=String(ocrText||"").replace(/\u00a0/g," ").replace(/[|]/g,"I");
+ let lines=text.toUpperCase().split(/\n+/).map(x=>x.replace(/\s+/g," ").trim()).filter(Boolean);
+ const cityLine=lines.find(x=>/38620|SAN MIGUEL DE ABONA/i.test(x))||"";
+ const zip=(text.match(/\b38\d{3}\b/)||[])[0]||"";
+ let town=/SAN ISIDRO/i.test(text)?"San Isidro":
+   /SAN MIGUEL/i.test(text)||zip==="38620"?"San Miguel de Abona":
+   /GRANADILLA/i.test(text)?"Granadilla de Abona":
+   /VILAFLOR/i.test(text)?"Vilaflor":
+   "San Miguel de Abona";
+ let candidates=lines.filter(x=>/(?:^|\s)(?:C\/|CL\.?|CALLE|CM\.?|CAMINO|CTRA\.?|CARRETERA|AV\.?|AVENIDA|PASAJE|LG\.?|LUGAR|DISEMINADO|URB\.?|URBANIZACI[ÓO]N)(?:\s|$)/i.test(x));
+ // Si la etiqueta dice "CL DE LA IGLESIA 7 4", el 4 se considera posible
+ // piso/puerta y nunca se concatena en un supuesto portal 74.
+ candidates.sort((a,b)=>((b.match(/\b\d{1,4}[A-Z]?\b/g)||[]).length>0?1:0)-((a.match(/\b\d{1,4}[A-Z]?\b/g)||[]).length>0?1:0));
+ let selected=candidates[0]||"";
+ if(!selected){
+  let alt=lines.find(x=>/\b(?:IGLESIA|MONTAÑITA|DESEADA|LANZAROTE)\b/i.test(x));
+  if(alt)selected="CALLE "+alt;
+ }
+ // Eliminar posibles CP y localidad si el OCR los juntó en la misma línea.
+ selected=selected.replace(/\b38\d{3}\b.*$/,"").replace(/\bSAN MIGUEL DE ABONA\b.*$/,"").trim();
+ selected=selected.replace(/^CL[.\s]+/,"Calle ").replace(/^C\/\s*/,"Calle ").replace(/^CM[.\s]+/,"Camino ")
+   .replace(/^CTRA[.\s]+/,"Carretera ").replace(/^AV[.\s]+/,"Avenida ");
+ const m=selected.match(/^(.*?)\s*,?\s+(\d{1,4}[A-Z]?)(?:[\s,]+(\d{1,2}[A-Z]?))?\s*$/i);
+ if(!m)return {address:"",note:"No he podido identificar con seguridad la calle y número. Puedes escribirlos tú."};
+ let street=m[1].trim(),portal=m[2],extra=m[3];
+ if(!street||street.length<5)return {address:"",note:"No se ha podido reconocer bien el nombre de la calle."};
+ const pretty=street.replace(/\s+/g," ").replace(/^CALLE\s+/i,"Calle ").replace(/^CAMINO\s+/i,"Camino ");
+ const address=pretty+" "+portal+", "+town;
+ return {address,note:extra?"He leído un «"+extra+"» después del nº "+portal+". Podría ser piso o puerta; compruébalo antes de navegar.":"Verifica la dirección reconocida antes de iniciar la ruta.",zip};
+}
+async function preparePhoto(file){
+ if(!file||!file.type.startsWith("image/")){photoStatus("Elige una fotografía de la etiqueta.");return}
+ openPanel("scan-panel");
+ $("scan-action").disabled=true;$("scan-address").value="";
+ photoStatus("Preparando la foto…");
+ try{
+  // Límite de resolución y aumento de contraste para no saturar memoria en iPhone.
+  const bitmap=await createImageBitmap(file);
+  let scale=Math.min(2,1800/Math.max(bitmap.width,bitmap.height));
+  scale=Math.min(scale,2);
+  const canvas=document.createElement("canvas");
+  canvas.width=Math.max(1,Math.round(bitmap.width*scale));
+  canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+  const ctx=canvas.getContext("2d",{willReadFrequently:false});
+  ctx.filter="grayscale(100%) contrast(145%)";
+  ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);
+  if(bitmap.close)bitmap.close();
+  photoStatus("Cargando lector de texto (primera vez necesita internet)…");
+  const worker=await getPhotoWorker();
+  const data=await worker.recognize(canvas);
+  const value=extractPostalAddress(data.data.text);
+  $("scan-address").value=value.address;
+  $("scan-note").textContent=value.note;
+  if(value.address){
+   photoStatus("✓ Dirección encontrada. Comprueba el nº y pulsa Buscar.");
+  }else{
+   photoStatus("No se ha leído bien la etiqueta. Puedes repetir la foto o escribir la dirección.");
+  }
+ }catch(e){
+  photoStatus("Error al leer la foto: "+(e&&e.message?e.message:"OCR no disponible"));
+  $("scan-note").textContent="Puedes copiar el texto con «Texto en vivo» de Fotos y pegarlo en el campo de dirección.";
+ }finally{
+  $("scan-action").disabled=false;
+  $("scan-file").value="";$("scan-gallery").value="";
+ }
+}
+$("scan-label").onclick=()=>{$("scan-file").click()};
+$("scan-another").onclick=()=>{$("scan-file").click()};
+$("scan-gallery-button").onclick=()=>{$("scan-gallery").click()};
+$("scan-file").onchange=e=>preparePhoto(e.target.files&&e.target.files[0]);
+$("scan-gallery").onchange=e=>preparePhoto(e.target.files&&e.target.files[0]);
+$("scan-action").onclick=()=>{
+ const address=$("scan-address").value.trim();
+ if(!address){photoStatus("Escribe o revisa la dirección antes de buscar.");$("scan-address").focus();return}
+ $("q").value=address;
+ closePanels();
+ $("search-form").dispatchEvent(new Event("submit",{bubbles:true,cancelable:true}));
+};
+
 map.on("click",e=>showTarget(e.latlng.lat,e.latlng.lng,"Punto elegido"));
 function showStreetLabels(arr,b){
  labelsLayer.clearLayers();
