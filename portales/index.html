@@ -173,39 +173,159 @@ $("gps").onclick=()=>{
   app.gpsMarker.setLatLng([app.gps.lat,app.gps.lon]);map.panTo([app.gps.lat,app.gps.lon]);$("gps").innerHTML="■<br>Parar GPS";status("GPS ±"+Math.round(app.gps.accuracy)+" m · selecciona el portal de destino.");
  },e=>{status("No se puede obtener GPS: "+e.message,true);if(app.gpsWatch!==null)navigator.geolocation.clearWatch(app.gpsWatch);app.gpsWatch=null},{enableHighAccuracy:true,maximumAge:5000,timeout:20000});
 };
+// Búsqueda exacta: calle + número + localidad. Nunca ofrecer otros números como coincidencia.
 function parseQuery(raw){
- let s=raw.trim(),m=s.match(/\b(?:n[úu]mero|nº|no\.?|num\.?)\s*(\d{1,4}[a-zA-Z]?)\b/i),num=null;
- if(m){num=m[1];s=s.replace(m[0],"")}
- else {m=s.match(/\b(\d{1,4}[a-zA-Z]?)\b(?=\s*(?:,|$|\s+(?:san isidro|san miguel|tenerife|granadilla|el m[eé]dano|las chafiras)))/i);if(m){num=m[1];s=s.slice(0,m.index)+s.slice(m.index+m[0].length)}}
- let chunks=s.split(",");let street=chunks[0].replace(/\s+(?:san isidro|san miguel|tenerife|granadilla.*|el medano|las chafiras).*$/i,"").trim();
- return {raw,s,street,num};
+ const input=raw.trim().replace(/\s+/g," ");
+ let street=input,num=null,locality="";
+ // "Calle Isla de Lanzarote 44 San Isidro", con o sin comas / "nº 44"
+ const match=input.match(/^(.*?)\s*,?\s+(?:n[uú]mero\.?\s*|n[º°]\s*|num\.?\s*)?(\d{1,4}[a-zA-Z]?)(?:\s*[,\s]\s*(.*))?$/i);
+ if(match&&match[1].length>3){
+  street=match[1].trim().replace(/,$/,"").trim();num=match[2].toUpperCase();locality=(match[3]||"").trim();
+ }else{
+  // Permitir buscar solamente la calle con localidad sin número.
+  const local=input.match(/^(.*?)\s*[,\s]+\s*(San Isidro|San Miguel de Abona|Granadilla de Abona|El M[eé]dano|Las Chafiras|Tenerife)\s*$/i);
+  if(local){street=local[1].trim();locality=local[2]}
+ }
+ // CartoCiudad identifica "San Isidro" bajo el municipio Granadilla de Abona.
+ let normLoc=normalized(locality),municipality="",population="";
+ if(/SAN ISIDR/.test(normLoc)){population="SAN ISIDRO";municipality="GRANADILLA ABONA"}
+ else if(/GRANADILLA/.test(normLoc)){municipality="GRANADILLA ABONA"}
+ else if(/SAN MIGUEL/.test(normLoc)){municipality="SAN MIGUEL ABONA"}
+ else if(/LAS CHAFIRAS/.test(normLoc)){population="LAS CHAFIRAS";municipality="SAN MIGUEL ABONA"}
+ else if(/MEDANO/.test(normLoc)){population="EL MEDANO";municipality="GRANADILLA ABONA"}
+ return {raw:input,street:street.replace(/,\s*$/,""),num,locality,population,municipality};
 }
 function nearMatch(f,q){
  let p=f.properties||{},a=normalized(p.component_ThoroughfareName),b=normalized(q.street);
- return a&&b&&(a===b||a.includes(b)||b.includes(a)||b.split(" ").filter(x=>x.length>2&&a.includes(x)).length>=2);
+ return Boolean(a&&b&&(a===b||a.includes(b)||b.includes(a)));
 }
-function matchList(ary,q){return ary.filter(f=>f.geometry&&f.geometry.type==="Point"&&nearMatch(f,q)&&(!q.num||normalized(pnum(f.properties||{}))===normalized(q.num)))}
-function resultsShow(items,q){let el=$("results");el.replaceChildren();el.style.display="block";
- if(!items.length){let p=document.createElement("button");p.textContent="No se encontró el portal exacto. Consulta la calle o descarga esta zona.";el.appendChild(p);return}
- items.slice(0,35).forEach(f=>{let b=document.createElement("button");b.textContent=labelOf(f);b.onclick=()=>{let xy=pointOf(f);map.setView(xy,19);showTarget(xy[0],xy[1],labelOf(f))};el.appendChild(b)});
+function matchList(ary,q){
+ return ary.filter(f=>{
+  if(!f.geometry||f.geometry.type!=="Point"||!nearMatch(f,q))return false;
+  let p=f.properties||{};
+  if(q.num&&normalized(pnum(p))!==normalized(q.num))return false;
+  if(q.municipality&&p.component_AdminUnitName_4&&normalized(p.component_AdminUnitName_4)!==q.municipality)return false;
+  return true;
+ });
+}
+function resultsShow(items,q){
+ let el=$("results");el.replaceChildren();el.style.display="block";
+ if(!items.length){
+  let p=document.createElement("button");
+  p.textContent=q.num?"No hay una coincidencia verificada del nº "+q.num+". No se mostrarán otros números como si fueran el destino.":"No hay resultados de esa calle.";
+  el.appendChild(p);return
+ }
+ items.slice(0,35).forEach(f=>{
+  let b=document.createElement("button");
+  let p=f.properties||{};
+  b.textContent=labelOf(f)+" ("+(p.component_AdminUnitName_4||"Tenerife")+")";
+  b.onclick=()=>{let xy=pointOf(f);map.setView(xy,19);showTarget(xy[0],xy[1],labelOf(f))};
+  el.appendChild(b);
+ });
  let close=document.createElement("button");close.textContent="Cerrar";close.onclick=()=>{el.style.display="none"};el.appendChild(close);
 }
+function candidateMatches(candidate,q){
+ if(candidate.type!=="portal"||!Number.isFinite(Number(candidate.lat))||!Number.isFinite(Number(candidate.lng)))return false;
+ if(Number(candidate.lat)<27.8||Number(candidate.lat)>28.7||Number(candidate.lng)<-17.3||Number(candidate.lng)>-16.0)return false;
+ if(normalized(candidate.portalNumber)!==normalized(q.num))return false;
+ const addrStreet=String(candidate.address||"").split(",")[0].replace(/\s+\d+[A-Za-z]?\s*$/,"");
+ const a=normalized(addrStreet),b=normalized(q.street);
+ if(!(a===b||a.includes(b)||b.includes(a)))return false;
+ if(q.population&&normalized(candidate.poblacion)!==q.population)return false;
+ if(q.municipality&&normalized(candidate.muni)!==q.municipality)return false;
+ return true;
+}
+function showCandidateResults(matches,q){
+ let el=$("results");el.replaceChildren();el.style.display="block";
+ matches.slice(0,30).forEach(c=>{
+  let b=document.createElement("button");
+  b.textContent=(c.address||q.street+" "+q.num)+" · "+(c.postalCode||"Tenerife");
+  b.onclick=()=>selectCandidate(c);
+  el.appendChild(b)
+ });
+ let close=document.createElement("button");close.textContent="Cerrar";close.onclick=()=>el.style.display="none";el.appendChild(close)
+}
+function selectCandidate(c){
+ map.setView([Number(c.lat),Number(c.lng)],20);
+ showTarget(Number(c.lat),Number(c.lng),c.address);
+ status("✓ Portal exacto "+c.portalNumber+" en "+(c.poblacion||c.muni)+". Pulsa Google Maps o Apple Maps para navegar.");
+}
+async function searchOfficial(q){
+ // CartoCiudad tiene portales con coordenadas; NO basarse en el primer resultado de Nominatim.
+ // La localidad se usa para filtrar; incluir "San Isidro" en q de CartoCiudad
+ // puede devolver falsos positivos de "Isla Mayor".
+ const qs=[q.street+" "+q.num];
+ if(q.municipality==="GRANADILLA ABONA")qs.push(q.street+" "+q.num+" Granadilla de Abona");
+ else if(q.municipality==="SAN MIGUEL ABONA")qs.push(q.street+" "+q.num+" San Miguel de Abona");
+ let found=[];
+ for(const query of qs){
+  const u="https://www.cartociudad.es/geocoder/api/geocoder/candidates?q="+encodeURIComponent(query)+"&limit=35";
+  const r=await fetch(u,{headers:{Accept:"application/json"}});
+  if(!r.ok)throw Error("CartoCiudad: "+r.status);
+  const data=await r.json();
+  if(!Array.isArray(data))throw Error("Respuesta no válida de CartoCiudad");
+  found=data.filter(c=>candidateMatches(c,q));
+  if(found.length)break;
+ }
+ return found;
+}
+async function fallbackOfficialArea(q){
+ // Respaldo si el Geocoder es inaccesible: consultar puntos oficiales IGN de zonas conocidas.
+ const center=q.population==="SAN ISIDRO"?[28.07437,-16.55288]:
+  q.municipality==="SAN MIGUEL ABONA"?[28.0985,-16.6150]:
+  q.municipality==="GRANADILLA ABONA"?[28.121,-16.578]:
+  [map.getCenter().lat,map.getCenter().lng];
+ const b=bboxFor(center[0],center[1],1.6);
+ if(!isTenerife(b))return [];
+ const data=await collection("address",b,8,()=>{});
+ app.liveAddresses=unique(app.liveAddresses.concat(data.features));showNumbers();
+ return matchList(data.features,q);
+}
 $("search-form").onsubmit=async e=>{
- e.preventDefault();document.activeElement.blur();let raw=$("q").value.trim();if(!raw)return;closePanels();let q=parseQuery(raw);
- let cached=matchList(storedAddresses(),q);
- if(cached.length){resultsShow(cached,q);status(cached.length+" direcciones encontradas en mapas descargados. Selecciona una.");return}
- if(!navigator.onLine){status("Sin conexión: ese portal no está en tus zonas guardadas.",true);resultsShow([],q);return}
- status("Buscando calle y número…");
+ e.preventDefault();document.activeElement.blur();
+ let raw=$("q").value.trim();if(!raw)return;
+ closePanels();const q=parseQuery(raw);
+ if(!q.street){status("Escribe una calle y, si lo tienes, el número.",true);return}
+ const cached=matchList(storedAddresses(),q);
+ if(!navigator.onLine){
+  if(cached.length===1){let xy=pointOf(cached[0]);map.setView(xy,19);showTarget(xy[0],xy[1],labelOf(cached[0]));status("Portal encontrado entre las direcciones descargadas.")}
+  else{resultsShow(cached,q);status(cached.length?"Selecciona el destino descargado.":"Ese portal no está en las zonas descargadas.",!cached.length)}
+  return;
+ }
+ status("Comprobando calle, número y localidad oficiales…");
+ if(q.num){
+  let official=[],serverFailure=false;
+  try{official=await searchOfficial(q)}catch(err){serverFailure=true}
+  if(official.length){
+   if(official.length===1)selectCandidate(official[0]);
+   else{showCandidateResults(official,q);status("Hay "+official.length+" coincidencias exactas del portal "+q.num+". Elige la localidad.");}
+   return;
+  }
+  if(cached.length){
+   resultsShow(cached,q);status("Coincidencia en la zona descargada. Verifica el municipio antes de navegar.");
+   return;
+  }
+  try{
+   let fallback=await fallbackOfficialArea(q);
+   if(fallback.length===1){let xy=pointOf(fallback[0]);map.setView(xy,19);showTarget(xy[0],xy[1],labelOf(fallback[0]));status("Portal "+q.num+" encontrado en las direcciones oficiales del IGN.")}
+   else if(fallback.length){resultsShow(fallback,q);status("Se han encontrado portales "+q.num+" de esa calle. Elige la dirección.");}
+   else{resultsShow([],q);status("No está verificado el nº "+q.num+" de esta calle y localidad."+(serverFailure?" El servidor oficial no respondió.":""),true)}
+  }catch(err){resultsShow([],q);status("No se pudo comprobar el nº "+q.num+" en los datos oficiales. Prueba de nuevo con conexión.",true)}
+  return;
+ }
+ // Búsqueda sin número: localizar la calle, pero no inventar un portal.
+ if(cached.length){resultsShow(cached,q);status("Selecciona un portal de esa calle entre las zonas descargadas.");return}
  try{
-  let nurl="https://nominatim.openstreetmap.org/search?format=json&limit=5&countrycodes=es&viewbox=-16.95,28.65,-16.08,27.90&bounded=1&accept-language=es&q="+encodeURIComponent(q.street+", Tenerife");
-  let nr=await fetch(nurl);if(!nr.ok)throw Error("Geocodificador: "+nr.status);
-  let hits=await nr.json();if(!hits.length){status("No he encontrado la calle. Prueba añadiendo localidad.",true);resultsShow([],q);return}
-  let lon=Number(hits[0].lon),lat=Number(hits[0].lat);map.setView([lat,lon],18);
-  let b=bboxFor(lat,lon,.75);
-  let d=await collection("address",b,6,()=>{}),found=matchList(d.features,q);
-  app.liveAddresses=unique(app.liveAddresses.concat(d.features));
-  showNumbers();if(found.length){resultsShow(found,q);status("Portal encontrado. Selecciona para navegar.")}else{status("Calle localizada; el número exacto no consta aquí. Pulsa un número cercano en el mapa.",true);resultsShow(matchList(d.features,{street:q.street}),q)}
- }catch(err){status("Falló la búsqueda online. Usa las zonas descargadas si están disponibles.",true)}
+  const query=q.street+", "+(q.locality||"Tenerife");
+  const url="https://nominatim.openstreetmap.org/search?format=json&limit=6&countrycodes=es&viewbox=-16.95,28.65,-16.08,27.90&bounded=1&accept-language=es&q="+encodeURIComponent(query);
+  const r=await fetch(url);if(!r.ok)throw Error("Sin servicio de calles");
+  const hits=await r.json();
+  if(!hits.length){status("No se encuentra esta calle. Añade la localidad.",true);resultsShow([],q);return}
+  const result=$("results");result.replaceChildren();result.style.display="block";
+  hits.forEach(h=>{const b=document.createElement("button");b.textContent=h.display_name;
+    b.onclick=()=>{map.setView([+h.lat,+h.lon],19);closePanels();status("Calle encontrada. Pulsa el número del portal que necesites.")};result.appendChild(b)});
+  status("Selecciona la calle correcta. Para navegar a un portal, indica también el número.");
+ }catch(err){status("No se pudo consultar el buscador de calles.",true)}
 };
 function distance(a,b){let R=6371000,dl=(b[1]-a[1])*Math.PI/180,dp=(b[0]-a[0])*Math.PI/180,q=Math.sin(dp/2)**2+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.min(1,Math.sqrt(q)))}
 function graphFor(roads){
