@@ -163,21 +163,25 @@ async function collection(coll,b,maxPages,progress){
 async function loadZones(){try{app.zones=await dbAll();updateView()}catch(e){status("No se puede acceder al almacenamiento del iPhone.",true)}}
 // Centros verificados o interpolados entre núcleos, con solapamiento
 // para cubrir de la zona alta de Vilaflor a Golf del Sur.
+// Cobertura sistemática: toda la caja municipal referenciada por OpenStreetMap
+// (lat 28.00864..28.13114, lon -16.64348..-16.59675) y acceso a Vilaflor.
+// Dos columnas oeste/este de 1,45 km de radio y seis bandas norte/sur:
+// sin espacios descubiertos dentro del rectángulo del municipio.
 const CORRIDOR_PACKS=[
- {id:"vilaflor",name:"Vilaflor y salida hacia San Miguel",lat:28.1591,lon:-16.6365,km:1.65},
- {id:"alto",name:"Acceso norte / subida Vilaflor",lat:28.1430,lon:-16.6280,km:1.65},
- {id:"fronton",name:"El Frontón y medianías altas",lat:28.1210,lon:-16.6150,km:1.65},
- {id:"centro",name:"San Miguel casco y Tamaide",lat:28.0992051,lon:-16.6167914,km:1.65},
- {id:"roque",name:"El Roque / caseríos oeste",lat:28.0935886,lon:-16.6356061,km:1.65},
- {id:"montanita",name:"La Montañita / caminos rurales",lat:28.0964973,lon:-16.61081265,km:1.6},
- {id:"zocas",name:"Las Zocas / medianías",lat:28.0800,lon:-16.6235,km:1.75},
- {id:"aldea",name:"Aldea Blanca / entorno rural",lat:28.0680,lon:-16.6370,km:1.75},
- {id:"llano",name:"Llano del Camello",lat:28.0610,lon:-16.6080,km:1.7},
- {id:"oroteanda",name:"Oroteanda y enlaces",lat:28.0620,lon:-16.6250,km:1.7},
- {id:"chafiras",name:"Las Chafiras",lat:28.0478736,lon:-16.6227498,km:1.7},
- {id:"guargacho",name:"Guargacho y diseminados",lat:28.0380,lon:-16.6360,km:1.7},
- {id:"golf",name:"Golf del Sur y costa",lat:28.0307407,lon:-16.602699,km:1.75},
- {id:"amarilla",name:"Amarilla Golf / costa occidental",lat:28.0250,lon:-16.6180,km:1.65}
+ {id:"vilaflor-casco",name:"Vilaflor casco y salida sur",lat:28.1591,lon:-16.6365,km:1.45},
+ {id:"vilaflor-acceso",name:"Carretera de Vilaflor hacia San Miguel",lat:28.1410,lon:-16.6280,km:1.45},
+ {id:"norte-oeste",name:"Zona alta / El Frontón oeste",lat:28.1200,lon:-16.6320,km:1.45},
+ {id:"norte-este",name:"Zona alta / El Frontón este",lat:28.1200,lon:-16.6070,km:1.45},
+ {id:"casco-oeste",name:"San Miguel / El Roque / Tamaide oeste",lat:28.0990,lon:-16.6320,km:1.45},
+ {id:"casco-este",name:"San Miguel casco / La Montañita",lat:28.0990,lon:-16.6070,km:1.45},
+ {id:"medianas-oeste",name:"Las Zocas / medianías oeste",lat:28.0780,lon:-16.6320,km:1.45},
+ {id:"medianas-este",name:"Las Zocas / medianías este",lat:28.0780,lon:-16.6070,km:1.45},
+ {id:"enlaces-oeste",name:"Aldea Blanca / Oroteanda oeste",lat:28.0570,lon:-16.6320,km:1.45},
+ {id:"enlaces-este",name:"Llano del Camello / Las Chafiras norte",lat:28.0570,lon:-16.6070,km:1.45},
+ {id:"baja-oeste",name:"Guargacho / Las Chafiras oeste",lat:28.0360,lon:-16.6320,km:1.45},
+ {id:"baja-este",name:"Las Chafiras sur / Golf del Sur norte",lat:28.0360,lon:-16.6070,km:1.45},
+ {id:"costa-oeste",name:"Amarilla Golf / Guargacho costa",lat:28.0150,lon:-16.6320,km:1.45},
+ {id:"costa-este",name:"Golf del Sur / litoral",lat:28.0150,lon:-16.6070,km:1.45}
 ];
 $("see-corridor").onclick=()=>{closePanels();map.fitBounds(CORRIDOR_BOUNDS,{padding:[25,20]});status("Zona completa: Vilaflor → San Miguel → Golf del Sur.")};
 $("see-sanmiguel").onclick=()=>{closePanels();map.setView(DEFAULT,17)};
