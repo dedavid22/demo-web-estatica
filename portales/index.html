@@ -9,7 +9,7 @@
 <style>
 *{box-sizing:border-box}html,body{margin:0;height:100%;overscroll-behavior:none;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17304a;background:#e4e9ee}button,input,select{font:inherit}button{cursor:pointer}
 #map{position:absolute;inset:0;background:#e8eef0;z-index:0}.leaflet-container{font-family:inherit!important}.leaflet-control-zoom{margin-top:155px!important}.leaflet-control-zoom a{height:38px!important;width:38px!important;line-height:38px!important}.leaflet-control-attribution{font-size:9px!important;margin-bottom:calc(88px + env(safe-area-inset-bottom))!important}
-header{position:absolute;z-index:1000;top:0;left:0;right:0;background:#fff;box-shadow:0 3px 12px #0003;padding:calc(7px + env(safe-area-inset-top)) 9px 9px}h1{font-size:15px;margin:0 0 8px;font-weight:800}#search-form{display:flex;gap:6px}#scan-label{flex:0 0 46px;min-width:46px;border:0;border-radius:9px;background:#173f5c;color:white;font-size:23px;min-height:44px;padding:0}#q{min-width:0;flex:1;border:1px solid #aab7c5;border-radius:9px;padding:11px 10px;font-size:16px;color:#17304a}button.yellow{background:#ffce26;color:#102b46;border:0;border-radius:9px;font-weight:800;padding:10px 13px}#status{font-size:12px;color:#435467;line-height:1.3;margin:6px 0 0;min-height:15px}.warn{color:#ae241e!important;font-weight:700}
+header{position:absolute;z-index:1000;top:0;left:0;right:0;background:#fff;box-shadow:0 3px 12px #0003;padding:calc(7px + env(safe-area-inset-top)) 9px 9px}h1{font-size:15px;margin:0 0 8px;font-weight:800}:root{color-scheme:light}header{background:#fff!important}#q,#scan-address{background:#fff!important;color:#17304a!important;-webkit-text-fill-color:#17304a!important}#search-form{display:flex;gap:6px}#scan-label{flex:0 0 46px;min-width:46px;border:0;border-radius:9px;background:#173f5c;color:white;font-size:23px;min-height:44px;padding:0}#q{min-width:0;flex:1;border:1px solid #aab7c5;border-radius:9px;padding:11px 10px;font-size:16px;color:#17304a}button.yellow{background:#ffce26;color:#102b46;border:0;border-radius:9px;font-weight:800;padding:10px 13px}#status{font-size:12px;color:#435467;line-height:1.3;margin:6px 0 0;min-height:15px}.warn{color:#ae241e!important;font-weight:700}
 #menu{position:absolute;z-index:999;bottom:0;left:0;right:0;background:#fff;display:flex;gap:5px;box-shadow:0 -2px 9px #0002;padding:8px 8px calc(8px + env(safe-area-inset-bottom))}#menu button{flex:1;min-width:0;background:#153452;color:#fff;border:0;border-radius:9px;font-size:12px;font-weight:730;min-height:53px;padding:5px}.offlinebtn{background:#ffd226!important;color:#1b3347!important}#results{position:absolute;z-index:1101;display:none;top:calc(120px + env(safe-area-inset-top));left:8px;right:8px;max-height:48%;overflow:auto;border-radius:12px;box-shadow:0 6px 20px #0004;background:#fff}#results button{border:0;border-bottom:1px solid #d7dce2;display:block;width:100%;text-align:left;background:#fff;padding:12px;color:#17304a;font-size:13px;line-height:1.4}
 #panel,#zones,#stops,#scan-panel{display:none;position:absolute;z-index:1102;left:7px;right:7px;bottom:calc(76px + env(safe-area-inset-bottom));background:white;border-radius:14px;padding:13px;box-shadow:0 4px 24px #0005;max-height:65vh;overflow:auto}#zones,#stops{top:calc(127px + env(safe-area-inset-top));}#scan-panel{z-index:1200;top:calc(125px + env(safe-area-inset-top));bottom:auto;max-height:70vh;overflow:auto}#scan-address{width:100%;padding:13px;font-size:17px;border:2px solid #ffce26;border-radius:9px;outline-color:#e1aa00}#scan-action{width:100%;min-height:52px;margin-top:10px}#scan-progress{font-weight:700;color:#1e4260;margin-bottom:8px}#scan-photo{font-size:12px;color:#455d71}#scan-note{color:#9f341d;font-weight:700}h2{font-size:18px;margin:4px 29px 10px 0}p.note{font-size:12px;line-height:1.45;color:#506273;margin:6px 0}button.close{position:absolute;top:10px;right:9px;border:0;border-radius:7px;padding:5px 9px;background:#e7eaee;font-size:18px}.links{display:flex;gap:8px;margin:10px 0}.links a{flex:1;background:#193958;color:white;text-decoration:none;text-align:center;font-weight:800;font-size:14px;border-radius:10px;padding:14px 5px}.links a:first-child{background:#1969af}.row{display:flex;gap:7px;margin:8px 0;align-items:center}.row>*{min-width:0}.row input,.row select{flex:1;padding:10px 8px;border:1px solid #a9b5c2;border-radius:8px;font-size:15px}.row button{background:#ffcf27;border:0;border-radius:8px;padding:11px;font-weight:800}.subbutton{background:#dde6ec!important;font-weight:700!important}.entry{border-bottom:1px solid #e0e4e8;padding:8px 0;font-size:14px}.entry strong{display:block}.entry button{margin:6px 4px 0 0;background:#e6eff6;border:0;padding:8px;border-radius:7px;font-weight:700;color:#153452}
 .number-icon{background:transparent;border:0}.num{display:inline-block;transform:translate(-50%,-50%);white-space:nowrap;background:#fffbd6;border:1px solid #47586a;border-radius:5px;box-shadow:0 1px 3px #0005;padding:2px 4px;color:#182e3f;font-size:12px;font-weight:900;min-width:20px;text-align:center}.num.highlight{background:#ffcf27;border:2px solid #da3535;font-size:15px}.streetname{font-size:12px;color:#1a3045;background:#fffff2f2;border:1px solid #a8b7c4;border-radius:4px;padding:2px 5px;font-weight:800;white-space:nowrap;box-shadow:0 1px 2px #0002;transform:translate(-50%,-50%)}.mygps{background:#2186f9;width:17px;height:17px;border-radius:50%;border:3px solid white;box-shadow:0 0 0 5px #3187e944}.offline-pill{position:absolute;z-index:900;bottom:calc(90px + env(safe-area-inset-bottom));left:8px;background:#fffbe3;border:1px solid #d8be54;color:#263d4e;border-radius:20px;padding:5px 8px;font-size:11px;font-weight:700;display:none}
@@ -191,7 +191,6 @@ $("scan-action").onclick=()=>{
 map.on("click",e=>showTarget(e.latlng.lat,e.latlng.lng,"Punto elegido"));
 function showStreetLabels(arr,b){
  labelsLayer.clearLayers();
- if(!app.offlineView)return;
  if(map.getZoom()<=16){
   for(const [name,lat,lon] of LOCATIONS){
    if(!b.contains([lat,lon]))continue;
@@ -228,14 +227,29 @@ function showNumbers(){
  const arr=app.offlineView?storedAddresses():unique(app.liveAddresses.concat(storedAddresses()));
  const b=map.getBounds();
  showStreetLabels(arr,b);
- if(!app.numbersOn||map.getZoom()<15)return;
+ if(!app.numbersOn)return;
+ const zoom=map.getZoom();
+ // En los barrios y en carreteras rurales: ver las CALLES primero.
+ // A escala de sector los números son ilegibles y tapan el callejero.
+ if(zoom<18)return;
+ const radius=zoom<=18?31:zoom===19?25:zoom===20?21:17;
+ const reserved=new Set();
+ const center=map.getCenter();
+ const nearby=arr.filter(f=>f.geometry?.type==="Point"&&inView(f,b))
+  .sort((a,b)=>map.distance(pointOf(a),center)-map.distance(pointOf(b),center));
  let count=0;
- for(const f of arr){
-  if(!f.geometry||f.geometry.type!=="Point"||!inView(f,b))continue;
-  const xy=pointOf(f),p=f.properties||{},n=pnum(p);if(!n)continue;
-  if(count++>1100)break;
-  let icon=L.divIcon({className:"number-icon",html:'<span class="num">'+safe(n)+'</span>',iconSize:[1,1],iconAnchor:[0,0]});
+ for(const f of nearby){
+  const xy=pointOf(f),p=f.properties||{},n=pnum(p);
+  if(!n||zoom<20&&/^S[- ]?N$/i.test(n))continue;
+  const px=map.latLngToContainerPoint(xy),gx=Math.round(px.x/radius),gy=Math.round(px.y/radius);
+  if(px.x<8||px.x>map.getSize().x-8||px.y<125||px.y>map.getSize().y-75)continue;
+  let occupied=false;
+  for(let dx=-1;dx<=1&&!occupied;dx++)for(let dy=-1;dy<=1;dy++)if(reserved.has((gx+dx)+":"+(gy+dy))) {occupied=true;break}
+  if(occupied)continue;
+  reserved.add(gx+":"+gy);
+  const icon=L.divIcon({className:"number-icon",html:'<span class="num">'+safe(n)+'</span>',iconSize:[1,1],iconAnchor:[0,0]});
   L.marker(xy,{icon,keyboard:true}).on("click",e=>{L.DomEvent.stopPropagation(e);showTarget(xy[0],xy[1],labelOf(f))}).addTo(numbersLayer);
+  if(++count>=300)break;
  }
 }
 function showRoads(){
@@ -394,7 +408,7 @@ async function refreshOnline(){
  try{
   let j=await collection("address",bbox,3,()=>{});if(seq!==app.seq)return;
   app.liveAddresses=j.features;showNumbers();
-  if(!app.searchFocus)status(j.features.length+" números oficiales localizados"+(j.truncated?" · acerca más el mapa":"")+" · pulsa uno para navegar.");
+  if(!app.searchFocus)status(map.getZoom()<18?"Acerca el mapa 2 niveles para ver números de portal; así las calles permanecen legibles.":j.features.length+" portales disponibles · toca uno para navegar.");
  }catch(e){if(seq!==app.seq)return;showNumbers();status("No se pudo consultar IGN: aparecen los portales que tengas descargados.",true)}
 }
 function refreshSoon(){clearTimeout(app.refreshTimer);app.refreshTimer=setTimeout(refreshOnline,650)}
@@ -460,14 +474,14 @@ function parseQuery(raw){
   street=match[1].trim().replace(/,$/,"").trim();num=match[2].toUpperCase();locality=(match[3]||"").trim();
  }else{
   // Permitir buscar solamente la calle con localidad sin número.
-  const local=input.match(/^(.*?)\s*[,\s]+\s*(San Isidro|San Miguel de Abona|Granadilla de Abona|El M[eé]dano|Las Chafiras|Tenerife)\s*$/i);
+  const local=input.match(/^(.*?)\s*[,\s]+\s*(San Isidro|San Miguel(?: de Abona)?|San Mi|Granadilla(?: de Abona)?|El M[eé]dano|Las Chafiras|Tenerife)\s*$/i);
   if(local){street=local[1].trim();locality=local[2]}
  }
  // CartoCiudad identifica "San Isidro" bajo el municipio Granadilla de Abona.
  let normLoc=normalized(locality),municipality="",population="";
  if(/SAN ISIDR/.test(normLoc)){population="SAN ISIDRO";municipality="GRANADILLA ABONA"}
  else if(/GRANADILLA/.test(normLoc)){municipality="GRANADILLA ABONA"}
- else if(/SAN MIGUEL/.test(normLoc)){municipality="SAN MIGUEL ABONA"}
+ else if(/SAN MIGUEL|SAN MI$/.test(normLoc)){municipality="SAN MIGUEL ABONA"}
  else if(/LAS CHAFIRAS/.test(normLoc)){population="LAS CHAFIRAS";municipality="SAN MIGUEL ABONA"}
  else if(/MEDANO/.test(normLoc)){population="EL MEDANO";municipality="GRANADILLA ABONA"}
  return {raw:input,street:street.replace(/,\s*$/,""),num,locality,population,municipality};
@@ -596,6 +610,62 @@ async function searchOfficial(q){
  }
  return found;
 }
+// Via sin número: CartoCiudad candidates + find proporciona el trazado y
+// coordenadas de referencia; Nominatim se usa únicamente como último recurso.
+async function searchOfficialStreet(q){
+ const terms=[q.street, q.street.replace(/^(calle|camino|avenida|avda|carretera)\s+/i,"")];
+ const used=new Set();let options=[];
+ for(const term of terms){
+  if(used.has(term))continue;used.add(term);
+  const req=await fetch("https://www.cartociudad.es/geocoder/api/geocoder/candidates?q="+encodeURIComponent(term)+"&limit=40",{headers:{Accept:"application/json"}});
+  if(!req.ok)continue;
+  const data=await req.json();
+  if(!Array.isArray(data))continue;
+  options.push(...data.filter(c=>{
+   if(!["callejero","carreteras"].includes(c.type))return false;
+   if(q.municipality&&normalized(c.muni)!==q.municipality)return false;
+   const street=String(c.address||"").split(",")[0];
+   const a=normalized(street),b=normalized(q.street);
+   return a&&b&&(a===b||a.includes(b)||b.includes(a));
+  }));
+  if(options.length)break;
+ }
+ options=options.filter((x,i,a)=>a.findIndex(y=>y.id===x.id)===i)
+   .sort((a,b)=>a.muni==="San Miguel de Abona"?-1:b.muni==="San Miguel de Abona"?1:0);
+ const located=[];
+ for(const candidate of options.slice(0,7)){
+  let res=await fetch("https://www.cartociudad.es/geocoder/api/geocoder/find?q="+encodeURIComponent(candidate.address),{headers:{Accept:"application/json"}});
+  if(!res.ok)continue;
+  const row=await res.json();
+  if(row&&Number.isFinite(Number(row.lat))&&Number.isFinite(Number(row.lng))&&Number(row.lat)>27&&Number(row.lng)<-16){
+   located.push({...candidate,lat:Number(row.lat),lng:Number(row.lng),geom:row.geom||""});
+  }
+ }
+ return located;
+}
+function selectOfficialStreet(c){
+ app.followGPS=false;app.searchFocus=true;
+ map.setView([c.lat,c.lng],18,{animate:false});
+ routeLayer.clearLayers();
+ const m=String(c.geom||"").match(/^LINESTRING\s*\((.*)\)$/i);
+ if(m){
+  const line=m[1].split(",").map(pair=>pair.trim().split(/\s+/).map(Number))
+    .filter(x=>x.length>=2&&x.every(Number.isFinite)).map(x=>[x[1],x[0]]);
+  if(line.length>1)L.polyline(line,{color:"#ff8c00",weight:8,opacity:.85}).addTo(routeLayer);
+ }
+ showTarget(c.lat,c.lng,(c.address||"Calle")+" · punto de referencia SIN número");
+ status("✓ Calle localizada en "+c.muni+". Es un punto de referencia; introduce el portal para ir al edificio exacto.");
+}
+function showOfficialStreetResults(rows){
+ const el=$("results");el.replaceChildren();el.style.display="block";
+ rows.forEach(c=>{
+  const button=document.createElement("button");
+  button.textContent="📍 "+c.address+" · ver calle / navegar a referencia";
+  button.onclick=()=>selectOfficialStreet(c);
+  el.appendChild(button);
+ });
+}
+
 async function fallbackOfficialArea(q){
  // Respaldo si el Geocoder es inaccesible: consultar puntos oficiales IGN de zonas conocidas.
  const center=q.population==="SAN ISIDRO"?[28.07437,-16.55288]:
@@ -646,19 +716,44 @@ $("search-form").onsubmit=async e=>{
   }catch(err){showUnverifiedStreet(q);status("La comprobación oficial falló. Puedes ver el tramo de calle o tocar el portal manualmente.",true)}
   return;
  }
- // Búsqueda sin número: localizar la calle, pero no inventar un portal.
- if(cached.length){resultsShow(cached,q);status("Selecciona un portal de esa calle entre las zonas descargadas.");return}
+ // Calle sin número: resolver primero contra la fuente oficial; nunca quedarse
+ // en el GPS actual después de pulsar Buscar.
+ if(!navigator.onLine){
+  if(cached.length){
+   const center=pointOf(cached[0]);
+   map.setView(center,18,{animate:false});
+   showTarget(center[0],center[1],q.street+" · referencia de calle (sin número)");
+   status("Calle encontrada en las zonas descargadas; punto aproximado, no portal exacto.");
+  }else{
+   resultsShow([],q);
+   status("Esta calle no figura en las zonas descargadas. Consulta online antes de entrar en zona rural.",true);
+  }
+  return;
+ }
  try{
-  const query=q.street+", "+(q.locality||"Tenerife");
+  let located=await searchOfficialStreet(q);
+  if(located.length===1){selectOfficialStreet(located[0]);return}
+  if(located.length>1){showOfficialStreetResults(located);status("Elige la calle en el municipio correcto.");return}
+ }catch(err){/* segunda fuente como respaldo */}
+ if(cached.length){
+  const center=pointOf(cached[0]);
+  map.setView(center,18,{animate:false});
+  showTarget(center[0],center[1],q.street+" · punto de referencia (sin número)");
+  status("Referencia encontrada en los datos descargados. Para un portal exacto, añade número.");
+  return;
+ }
+ try{
+  const query=q.street+", "+(q.locality||"San Miguel de Abona, Tenerife");
   const url="https://nominatim.openstreetmap.org/search?format=json&limit=6&countrycodes=es&viewbox=-16.95,28.65,-16.08,27.90&bounded=1&accept-language=es&q="+encodeURIComponent(query);
   const r=await fetch(url);if(!r.ok)throw Error("Sin servicio de calles");
   const hits=await r.json();
-  if(!hits.length){status("No se encuentra esta calle. Añade la localidad.",true);resultsShow([],q);return}
+  if(!hits.length){status("No figura en las fuentes consultadas. Comprueba el nombre de la vía.",true);resultsShow([],q);return}
   const result=$("results");result.replaceChildren();result.style.display="block";
   hits.forEach(h=>{const b=document.createElement("button");b.textContent=h.display_name;
-    b.onclick=()=>{map.setView([+h.lat,+h.lon],19);closePanels();status("Calle encontrada. Pulsa el número del portal que necesites.")};result.appendChild(b)});
-  status("Selecciona la calle correcta. Para navegar a un portal, indica también el número.");
+    b.onclick=()=>{map.setView([+h.lat,+h.lon],18);showTarget(+h.lat,+h.lon,h.display_name+" · referencia sin número")};result.appendChild(b)});
+  status("Selecciona una calle. Introduce número para localizar el portal exacto.");
  }catch(err){status("No se pudo consultar el buscador de calles.",true)}
+
 };
 function distance(a,b){let R=6371000,dl=(b[1]-a[1])*Math.PI/180,dp=(b[0]-a[0])*Math.PI/180,q=Math.sin(dp/2)**2+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.min(1,Math.sqrt(q)))}
 function graphFor(roads){
